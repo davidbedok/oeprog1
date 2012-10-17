@@ -74,6 +74,7 @@ namespace ProgrammingTheorem
             TheoremsTest.testCountingDivisible();
             TheoremsTest.testMaximumSelection();
             TheoremsTest.testAssortmentDivisible();
+            TheoremsTest.testAssortmentMinimums();
             TheoremsTest.testSeparateParity();
             TheoremsTest.testUnion();
             TheoremsTest.testIntersect();

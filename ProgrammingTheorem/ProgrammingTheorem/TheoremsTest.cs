@@ -57,6 +57,17 @@ namespace ProgrammingTheorem
             System.Console.WriteLine("output: " + Arrays.toString(divisibleData));
         }
 
+        public static void testAssortmentMinimums()
+        {
+            System.Console.WriteLine("# assortmentMinimums");
+            int[] data = { 7, 4, 2, 7, 2, 9, 8, 2 };
+            System.Console.WriteLine("input: " + Arrays.toString(data));
+            int[] minimums = Theorems.assortmentMinimums(data);
+            System.Console.WriteLine("output: " + Arrays.toString(minimums));
+            int[] minimumsAlter = Theorems.assortmentMinimumsAlter(data);
+            System.Console.WriteLine("output: " + Arrays.toString(minimumsAlter));
+        }
+
         public static void testSeparateParity()
         {
             System.Console.WriteLine("# separateParity");

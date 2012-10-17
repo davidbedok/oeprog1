@@ -86,5 +86,6 @@ namespace ConsoleGraphics
             } while (!exitCycle);
             
         }
+
     }
 }
