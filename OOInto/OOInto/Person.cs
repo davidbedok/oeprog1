@@ -22,12 +22,47 @@ namespace OOInto
 
         private readonly Hair hair;
 
+        public String NickName
+        {
+            get { return this.nickName; }
+            set { this.nickName = value; }
+        }
+
+        public int Height
+        {
+            get { return this.height; }
+            set
+            {
+                if (value > 0)
+                {
+                    this.height = value;
+                }
+            }
+        }
+
+        public int Weight
+        {
+            get { return this.weight; }
+            set
+            {
+                if (value > 0)
+                {
+                    this.weight = value;
+                }
+            }
+        }
+
         public Person(String birthName, int birthYear, HairType typeOfHair)
         {
             this.birthName = birthName;
             this.birthYear = birthYear;
-            Person.peopleCounter++;
             this.hair = new Hair(typeOfHair);
+            Person.peopleCounter++;
+        }
+
+        ~Person()
+        {
+            Person.peopleCounter--;
         }
 
         public String getNickName()

@@ -36,10 +36,11 @@ namespace OOInto
             this.color = color;
         }
 
+        /*
         public override String ToString()
         {
             return (this.color != null ? this.color + " and " : "") + this.type;
-        }
+        }*/
 
     }
 }

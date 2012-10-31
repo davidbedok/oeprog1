@@ -15,12 +15,17 @@ namespace OOInto
             Console.WriteLine("People counter: " + Person.getPeopleCounter());
 
             Person person = new Person("Nemecsek Erno", 1907, HairType.CURLY);
-            person.setNickName("nemerno");
+            person.setNickName("nemerno07");
+            person.NickName = "nemerno";
             person.setHeight(171);
+            person.Height = -21;
             person.setWeight(65);
+            person.Weight = 66;
             String nick = person.getNickName();
             Console.WriteLine(nick + "'s height: " + person.getHeight() + " cm");
             Console.WriteLine(nick + "'s weight: " + person.getWeight() + " kg");
+            Console.WriteLine(person.NickName + "'s height: " + person.Height + " cm");
+            Console.WriteLine(person.NickName + "'s weight: " + person.Weight + " kg");
             Console.WriteLine(nick + "'s height: " + person.getHeightInInches()
                     + " inches");
             Console.WriteLine(person.getBirthName() + " was born in "
