@@ -8,23 +8,23 @@ namespace HunCard
 {
     public class Card : System.Object
     {
-        private readonly CardSuit cardSuit;
-        private readonly CardRank cardRank;
+        private readonly CardSuit suit;
+        private readonly CardRank rank;
 
-        public Card(CardSuit cardSuit, CardRank cardRank)
+        public Card(CardSuit suit, CardRank rank)
         {
-            this.cardSuit = cardSuit;
-            this.cardRank = cardRank;
+            this.suit = suit;
+            this.rank = rank;
         }
 
-        public int getValue()
+        public int value()
         {
-            return ((int)cardSuit * (int)cardRank);
+            return (int)suit * (int)rank;
         }
 
         public override string ToString()
         {
-            return ("Card: " + cardSuit.ToString() + ":" + cardRank.ToString() + " value: " + this.getValue());
+            return ("Card: " + suit.ToString() + ":" + rank.ToString() + " value: " + this.value());
         }
 
         // never use, only test

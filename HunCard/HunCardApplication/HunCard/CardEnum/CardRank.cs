@@ -7,10 +7,10 @@ namespace HunCard.CardEnum
 {
     public enum CardRank /* : short */
     {
-        l7 = 7,
-        l8 = 8,
-        l9 = 9,
-        l10 = 10,
+        r7 = 7,
+        r8 = 8,
+        r9 = 9,
+        r10 = 10,
         Under = 15, // Also
         Over = 20, // Felso
         King = 30, // Kiraly

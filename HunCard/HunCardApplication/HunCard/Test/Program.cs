@@ -22,7 +22,7 @@ namespace HunCard.Test
         private static void testCardClass(Random rand)
         {
             System.Console.WriteLine("# Test Card class");
-            Card cardInstance = new Card(CardSuit.Acorns, CardRank.l8);
+            Card cardInstance = new Card(CardSuit.Acorns, CardRank.r8);
             System.Console.WriteLine(cardInstance);
 
             Card randomCard = Card.getRandomCard(rand);
@@ -44,7 +44,7 @@ namespace HunCard.Test
         private static void testPlayerClass(Random rand)
         {
             System.Console.WriteLine("# Test Player class");
-            Card cardInstance = new Card(CardSuit.Acorns, CardRank.l8);
+            Card cardInstance = new Card(CardSuit.Acorns, CardRank.r8);
             System.Console.WriteLine(cardInstance);
 
             Player playerInstance = new Player("Teszt Elek");
@@ -52,17 +52,17 @@ namespace HunCard.Test
             // without indexer
             playerInstance.setCardsItem(0, cardInstance);
             playerInstance.setCardsItem(1, Card.getRandomCard(rand));
-            playerInstance.setCardsItem(2, new Card(CardSuit.Bells, CardRank.l10));
+            playerInstance.setCardsItem(2, new Card(CardSuit.Bells, CardRank.r10));
 
             // with indexer
             playerInstance[0] = cardInstance;
             playerInstance[1] = Card.getRandomCard(rand);
-            playerInstance[2] = new Card(CardSuit.Bells, CardRank.l10);
+            playerInstance[2] = new Card(CardSuit.Bells, CardRank.r10);
 
             // for game
             playerInstance.addCard(cardInstance);
             playerInstance.addCard(Card.getRandomCard(rand));
-            playerInstance.addCard(CardSuit.Bells, CardRank.l10);
+            playerInstance.addCard(CardSuit.Bells, CardRank.r10);
 
             System.Console.WriteLine(playerInstance);
         }

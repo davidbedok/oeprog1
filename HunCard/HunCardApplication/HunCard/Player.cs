@@ -67,7 +67,7 @@ namespace HunCard
             {
                 if (this.cards[i] != null)
                 {
-                    ret += cards[i].getValue();
+                    ret += cards[i].value();
                 }
             }
             return ret;
