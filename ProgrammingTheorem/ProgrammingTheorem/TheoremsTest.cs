@@ -76,7 +76,7 @@ namespace ProgrammingTheorem
             int[][] separateNumbers = Theorems.separateParity(data);
             System.Console.WriteLine("even numbers: " + Arrays.toString(separateNumbers[0]));
             System.Console.WriteLine("odd numbers: " + Arrays.toString(separateNumbers[1]));
-            // C# our, ref params - not scope
+            // C# out, ref params - not scope
         }
 
         public static void testUnion()
