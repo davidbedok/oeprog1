@@ -9,7 +9,7 @@ namespace ProgrammingTheorem
     public class Program
     {
 
-        private static void Main(string[] args)
+        private static void Main2(string[] args)
         {
             System.Console.WriteLine("ProgrammingTheorem Demo");   
 
