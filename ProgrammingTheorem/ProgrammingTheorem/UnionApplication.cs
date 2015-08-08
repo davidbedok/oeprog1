@@ -6,7 +6,7 @@ namespace ProgrammingTheorem
     public class UnionApplication
     {
 
-        private static void Main(string[] args)
+        private static void Main2(string[] args)
         {
             TestUnion();
             TestUnionWithLINQ();
@@ -29,7 +29,7 @@ namespace ProgrammingTheorem
 
         private static int[] UnionEmpty(int[] dataA, int[] dataB)
         {
-            return new int[]{};
+            return new int[] { };
         }
 
         private static int[] Union(int[] dataA, int[] dataB)
