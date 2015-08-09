@@ -36,7 +36,7 @@ namespace Maze
             get { return this.top; }
         }
 
-        public Maze(int left, int top, int width, int height)
+        private Maze(int left, int top, int width, int height)
         {
             this.left = left;
             this.top = top;
@@ -63,7 +63,13 @@ namespace Maze
 
         public bool IsWall(int row, int column)
         {
-            return this.isValid(row, column) && this.fields[row, column];
+            bool valid = this.isValid(row, column);
+            return !valid || (valid && this.fields[row, column]);
+        }
+
+        public bool IsValidCheck(int row, int column)
+        {
+            return row >= 0 && row < this.fields.GetLength(0) && column >= 0 && column < this.fields.GetLength(1);
         }
 
         private bool isValid(int row, int column)
@@ -81,11 +87,12 @@ namespace Maze
             return column >= 0 && column < this.Width;
         }
 
-        public Player CreatePlayer( Random random, ConsoleColor background )
+        public Player CreatePlayer(Random random, ConsoleColor background)
         {
             int row = 0;
             int column = 0;
-            do {
+            do
+            {
                 row = random.Next(this.Height);
                 column = random.Next(this.Width);
             } while (IsWall(row, column));

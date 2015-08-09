@@ -15,8 +15,7 @@ namespace Maze
         private readonly Maze maze;
         private readonly Player player;
 
-
-        public Game( Random random, int left, int top, String mazeFileName )
+        public Game(Random random, int left, int top, String mazeFileName)
         {
             this.left = left;
             this.top = top;

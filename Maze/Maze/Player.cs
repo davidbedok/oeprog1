@@ -8,7 +8,6 @@ namespace Maze
 {
     public class Player
     {
-
         private const char SHAPE = '@';
 
         private readonly ConsoleColor background;
@@ -22,12 +21,7 @@ namespace Maze
             this.column = column;
         }
 
-        public void Show(int left, int top)
-        {
-            this.Draw(ConsoleColor.Green, left, top);
-        }
-
-        public void Move( Maze maze, Direction direction )
+        public void Move(Maze maze, Direction direction)
         {
             this.Draw(this.background, maze.Left, maze.Top);
             switch (direction)
@@ -60,12 +54,12 @@ namespace Maze
             this.Draw(ConsoleColor.Green, maze.Left, maze.Top);
         }
 
-        private void Draw( ConsoleColor color, int left, int top )
+        private void Draw(ConsoleColor color, int left, int top)
         {
             Console.ForegroundColor = color;
             Console.SetCursorPosition(left + this.column, top + this.row);
             Console.Write(SHAPE);
         }
-        
+
     }
 }

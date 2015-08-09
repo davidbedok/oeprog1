@@ -16,8 +16,7 @@ namespace Maze
             Console.SetWindowSize(Program.WINDOW_WIDTH, Program.WINDOW_HEIGHT);
             Console.Title = "Maze";
 
-            Game game = new Game(new Random(), 3, 2, @"maze\track-1.txt");
-            game.Play();
+            new Game(new Random(), 3, 2, @"maze\track-1.txt").Play();
         }
     }
 }

@@ -1,0 +1,11 @@
+﻿54;10
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                    X
+X  XX    XX  XX    XX  XX      XX    XXXX    XXXX    X
+X  XX    XX  XX    XX  XXXX    XX   XX  XX   XX  XX  X
+X  XXXXXXXX  XX    XX  XX  XX  XX  XX    XX  XXXX    X
+X  XX    XX  XX    XX  XX    XXXX   XX  XX   XX  XX  X
+X  XX    XX  XXXXXXXX  XX      XX    XXXX    XX  XX  X
+X                                                    X
+X                                                    X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

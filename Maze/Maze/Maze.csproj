@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="maze\hunor.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="maze\track-1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
