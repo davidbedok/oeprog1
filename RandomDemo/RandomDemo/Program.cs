@@ -24,8 +24,8 @@ namespace RandomDemo
             {
                 // Console.WriteLine(Generator.createRandomNumber(rand, Parity.EVEN, 11, 20));
                 // Console.WriteLine(Generator.createRandomRealNumber(rand, 10, 13));
-                // Console.WriteLine(Generator.createRandomName(rand));
-                Console.WriteLine(Generator.createRandomBrand(rand));
+                Console.WriteLine(Generator.createRandomName(rand));
+                // Console.WriteLine(Generator.createRandomBrand(rand));
             }
         }
 

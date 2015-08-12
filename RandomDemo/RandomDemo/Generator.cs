@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -76,6 +77,7 @@ namespace RandomDemo
 
         public static double createRandomRealNumber(Random random, int minValue, int maxValue)
         {
+
             return minValue + random.NextDouble() * (maxValue - minValue);
         }
         public static String createRandomString(Random random, int length)
@@ -83,27 +85,41 @@ namespace RandomDemo
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < length; i++)
             {
-                builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65))));
+                builder.Append(Convert.ToChar(random.Next((int)'A', ((int)'Z' + 1))));
             }
             return builder.ToString();
         }
 
         public static String createRandomName(Random random)
         {
-            return createRandomNamePart(random) + " " + createRandomNamePart(random);
+            int chance = random.Next(0, 100);
+            return createRandomNameParts(random, (chance < 5 ? 4 : chance < 25 ? 3 : 2), 8);
         }
 
-        public static String createRandomNamePart(Random random)
+        private static String createRandomNameParts(Random random, int size, int maximumLength)
         {
-            return createRandomString(random, 1) + createRandomString(random, random.Next(3, 7)).ToLower();
+            StringBuilder name = new StringBuilder(size * maximumLength);
+            for (int i = 0; i < size - 1; i++)
+            {
+                name.Append(createRandomNamePart(random, maximumLength)).Append(" ");
+            }
+            name.Append(createRandomNamePart(random, maximumLength));
+            return name.ToString();
         }
+
+        public static String createRandomNamePart(Random random, int maximumLength)
+        {
+            return createRandomString(random, 1) + createRandomString(random, random.Next(3, maximumLength - 1)).ToLower();
+        }
+
+        // return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(createRandomString(random, random.Next(3, 7)).ToLower());
+
 
         public static CarBrand createRandomBrand(Random random)
         {
             CarBrand[] values = (CarBrand[])Enum.GetValues(typeof(CarBrand));
-            return (CarBrand)random.Next(values.Length);
+            return values[random.Next(values.Length)];
         }
-
 
     }
 }
