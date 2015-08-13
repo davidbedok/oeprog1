@@ -9,40 +9,45 @@ namespace StripLightAdvertising
     public class Program
     {
 
-        private static void testCharacterModel(Random rand)
-        {
-            CharacterModel modelA = new CharacterModel('A', rand);
-            System.Console.WriteLine(modelA);
-            System.Console.WriteLine(modelA.getRow(0));
-            System.Console.WriteLine(modelA.getRow(1));
-            System.Console.WriteLine(modelA.getRow(2));
-            CharacterModel modelB = new CharacterModel('B', rand);
-            System.Console.WriteLine(modelB);
-            CharacterModel modelC = new CharacterModel('C', rand);
-            System.Console.WriteLine(modelC);
-            CharacterModel modelRand = new CharacterModel('R', rand);
-            System.Console.WriteLine(modelRand);
-        }
-
-        private static void testAdvertisement(Random rand)
-        {
-            Advertisement ad = new Advertisement("ABCRAABBRRA", rand, ConsoleColor.Black);
-            System.Console.WriteLine(ad);
-        }
-
-        private static void testMoveAd(Random rand)
-        {
-            Advertisement ad = new Advertisement("OBUDAI EGYETEM ", rand, ConsoleColor.Yellow);
-            ad.play(ConsoleColor.Black, 100);
-        }
-
         private static void Main(string[] args)
         {
             System.Console.Title = "Strip Light Advertising";
-            Random rand = new Random();
-            // Program.testCharacterModel(rand);
-            // Program.testAdvertisement(rand);
-            Program.testMoveAd(rand);
+            Random random = new Random();
+            // TestCharacterModel(random);
+            // TestAdvertisement();
+            TestAdvertisementMotion();
         }
+
+        private static void TestCharacterModel(Random random)
+        {
+            CharacterModel a = new CharacterModel('A');
+            Console.WriteLine(a);
+            Console.WriteLine(a.GetRow(0));
+            Console.WriteLine(a.GetRow(1));
+            Console.WriteLine(a.GetRow(2));
+            CharacterModel b = new CharacterModel('B');
+            Console.WriteLine(b);
+            CharacterModel c = new CharacterModel('C');
+            Console.WriteLine(c);
+            CharacterModel randomModel = CharacterModel.BuildRandomModel(random, 3, 6);
+            Console.WriteLine(randomModel);
+        }
+
+        private static void TestAdvertisement()
+        {
+            Advertisement ad = new Advertisement("OBUDAI EGYETEM", ConsoleColor.Black);
+            Console.WriteLine(ad);
+            ad.StepBack();
+            ad.StepBack();
+            ad.StepBack();
+            Console.WriteLine(ad);
+        }
+
+        private static void TestAdvertisementMotion()
+        {
+            Advertisement ad = new Advertisement("OBUDAI EGYETEM ", ConsoleColor.White);
+            ad.Play(ConsoleColor.DarkBlue, 100);
+        }
+
     }
 }

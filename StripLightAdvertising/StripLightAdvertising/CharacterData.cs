@@ -8,16 +8,7 @@ namespace StripLightAdvertising
     public class CharacterData
     {
 
-        public const byte CHAR_WIDTH = 5;
-        public const byte CHAR_HEIGHT = 7;
-
-        private static readonly byte[][] __MODEL = { new byte[]{ 0, 0, 0, 0, 0 }, 
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 } };
+        public const byte HEIGHT = 7;
 
         public static readonly CharacterData A_MODEL = new CharacterData('A', new byte[][]{
                                                      new byte[]{ 0, 0, 1, 0, 0 }, 
@@ -74,22 +65,22 @@ namespace StripLightAdvertising
                                                      new byte[]{ 1, 1, 1, 0, 0 } });
 
         public static readonly CharacterData I_MODEL = new CharacterData('I', new byte[][]{ 
-                                                     new byte[]{ 0, 0, 1, 0, 0 }, 
-                                                     new byte[]{ 0, 0, 1, 0, 0 },
-                                                     new byte[]{ 0, 0, 1, 0, 0 },
-                                                     new byte[]{ 0, 0, 1, 0, 0 },
-                                                     new byte[]{ 0, 0, 1, 0, 0 },
-                                                     new byte[]{ 0, 0, 1, 0, 0 },
-                                                     new byte[]{ 0, 0, 1, 0, 0 } });
+                                                     new byte[]{ 0, 1, 0 }, 
+                                                     new byte[]{ 0, 1, 0 },
+                                                     new byte[]{ 0, 1, 0 },
+                                                     new byte[]{ 0, 1, 0 },
+                                                     new byte[]{ 0, 1, 0 },
+                                                     new byte[]{ 0, 1, 0 },
+                                                     new byte[]{ 0, 1, 0 } });
 
         public static readonly CharacterData SPACE_MODEL = new CharacterData(' ', new byte[][]{ 
-                                                     new byte[]{ 0, 0, 0, 0, 0 }, 
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 },
-                                                     new byte[]{ 0, 0, 0, 0, 0 } });
+                                                     new byte[]{ 0, 0, 0 }, 
+                                                     new byte[]{ 0, 0, 0 },
+                                                     new byte[]{ 0, 0, 0 },
+                                                     new byte[]{ 0, 0, 0 },
+                                                     new byte[]{ 0, 0, 0 },
+                                                     new byte[]{ 0, 0, 0 },
+                                                     new byte[]{ 0, 0, 0 } });
 
         public static readonly CharacterData E_MODEL = new CharacterData('E', new byte[][]{ 
                                                      new byte[]{ 1, 1, 1, 1, 1 }, 
@@ -128,20 +119,32 @@ namespace StripLightAdvertising
                                                      new byte[]{ 0, 0, 1, 0, 0 } });
 
         public static readonly CharacterData M_MODEL = new CharacterData('M', new byte[][]{ 
-                                                     new byte[]{ 1, 0, 0, 0, 1 }, 
-                                                     new byte[]{ 1, 1, 0, 1, 1 },
-                                                     new byte[]{ 1, 0, 1, 0, 1 },
-                                                     new byte[]{ 1, 0, 0, 0, 1 },
-                                                     new byte[]{ 1, 0, 0, 0, 1 },
-                                                     new byte[]{ 1, 0, 0, 0, 1 },
-                                                     new byte[]{ 1, 0, 0, 0, 1 } });
+                                                     new byte[]{ 1, 0, 0, 0, 0, 0, 1 }, 
+                                                     new byte[]{ 1, 1, 0, 0, 0, 1, 1 },
+                                                     new byte[]{ 1, 0, 1, 0, 1, 0, 1 },
+                                                     new byte[]{ 1, 0, 0, 1, 0, 0, 1 },
+                                                     new byte[]{ 1, 0, 0, 0, 0, 0, 1 },
+                                                     new byte[]{ 1, 0, 0, 0, 0, 0, 1 },
+                                                     new byte[]{ 1, 0, 0, 0, 0, 0, 1 } });
 
         private readonly byte[][] data;
         private readonly char letter;
 
-        public byte[][] Data
+        public bool[][] Model
         {
-            get { return this.data; }
+            get
+            {
+                bool[][] result = new bool[this.data.Length][];
+                for (int i = 0; i < this.data.Length; i++)
+                {
+                    result[i] = new bool[this.data[i].Length];
+                    for (int k = 0; k < this.data[i].Length; k++)
+                    {
+                        result[i][k] = this.data[i][k] == 1;
+                    }
+                }
+                return result;
+            }
         }
 
         public char Letter

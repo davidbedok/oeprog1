@@ -46,7 +46,7 @@
     <Compile Include="Advertisement.cs" />
     <Compile Include="CharacterData.cs" />
     <Compile Include="CharacterModel.cs" />
-    <Compile Include="CharcterTrunk.cs" />
+    <Compile Include="CharacterTrunk.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

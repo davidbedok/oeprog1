@@ -23,16 +23,16 @@ namespace StripLightAdvertising
             CharacterData.T_MODEL,
             CharacterData.Y_MODEL};
 
-        public static byte[][] getCharacterModel( char letter )
+        public static bool[][] GetModelContent(char letter)
         {
             bool find = false;
             int i = 0;
-            while (i < CharacterTrunk.CHARACTERS.Length && !find)
+            while (i < CHARACTERS.Length && !find)
             {
-                find = (CharacterTrunk.CHARACTERS[i].Letter == letter);
+                find = (CHARACTERS[i].Letter == letter);
                 i++;
             }
-            return CharacterTrunk.CHARACTERS[i - 1].Data;
+            return CHARACTERS[i - 1].Model;
         }
 
     }

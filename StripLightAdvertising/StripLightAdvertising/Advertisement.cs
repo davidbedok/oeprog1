@@ -9,104 +9,100 @@ namespace StripLightAdvertising
     public class Advertisement
     {
 
-        private int actShift;
-        private readonly CharacterModel[] adModel;
+        private const char LETTER_SEPARATOR = ' ';
+
+        private int shift;
+        private readonly CharacterModel[] models;
+        private readonly int width;
         private readonly ConsoleColor backgroundColor;
 
-        public int AdvertisementWidth
+        private int Width
         {
             get
             {
-                return this.adModel.Length * CharacterData.CHAR_WIDTH + this.adModel.Length - 1;
+                return this.width + this.models.Length - 1;
             }
         }
 
-        public int AdvertisementHeight
+        public int Height
         {
             get
             {
-                return CharacterData.CHAR_HEIGHT + 2;
+                return CharacterData.HEIGHT + 2;
             }
         }
 
-        public Advertisement(string label, Random rand, ConsoleColor backgroundColor)
+        public Advertisement(String label, ConsoleColor backgroundColor)
         {
-            this.actShift = 0;
-            this.adModel = new CharacterModel[label.Length];
+            this.shift = 0;
+            this.models = new CharacterModel[label.Length];
+            int width = 0;
             for (int i = 0; i < label.Length; i++)
             {
-                this.adModel[i] = new CharacterModel(label[i], rand);    
+                this.models[i] = new CharacterModel(label[i]);
+                width += this.models[i].Width;
             }
+            this.width = width;
             this.backgroundColor = backgroundColor;
         }
 
-        private void stepShiftForward()
+        public void StepForward()
         {
-            if (this.actShift < this.AdvertisementWidth)
+            if (this.shift < this.Width)
             {
-                this.actShift++;
+                this.shift++;
             }
             else
             {
-                this.actShift = 0;
+                this.shift = 0;
             }
         }
 
-        private void stepShiftBack()
+        public void StepBack()
         {
-            if (this.actShift > 0)
+            if (this.shift > 0)
             {
-                this.actShift--;
+                this.shift--;
             }
             else
             {
-                this.actShift = this.AdvertisementWidth;
+                this.shift = this.Width;
             }
-        }
-
-        private static string shiftRow( string row, int shift )
-        {
-            return row.Substring(row.Length - shift, shift) + row.Substring(0, row.Length - shift);
-        }
-
-        public string print()
-        {
-            this.stepShiftBack();
-            return this.print(this.actShift);
-        }
-
-        public string print(int shift)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int k = 0; k < CharacterData.CHAR_HEIGHT; k++)
-            {
-                StringBuilder sbLine = new StringBuilder();
-                for (int i = 0; i < this.adModel.Length; i++)
-                {
-                    sbLine.Append(this.adModel[i].getRow(k)).Append(" ");
-                }
-                sb.AppendLine(Advertisement.shiftRow(sbLine.ToString(), shift));
-            }
-            return sb.ToString();
         }
 
         public override string ToString()
         {
-            return this.print(0);
+            StringBuilder builder = new StringBuilder();
+            for (int k = 0; k < CharacterData.HEIGHT; k++)
+            {
+                StringBuilder line = new StringBuilder();
+                for (int i = 0; i < this.models.Length; i++)
+                {
+                    line.Append(this.models[i].GetRow(k)).Append(LETTER_SEPARATOR);
+                }
+                builder.AppendLine(ShiftLine(line.ToString()));
+            }
+            return builder.ToString();
         }
 
-        public void play(ConsoleColor foregroundColor, int speed)
+        private string ShiftLine(string line)
         {
-            System.Console.WindowHeight = this.AdvertisementHeight;
-            System.Console.WindowWidth = this.AdvertisementWidth + 2;
-            System.Console.ForegroundColor = foregroundColor;
-            System.Console.BackgroundColor = this.backgroundColor;
-            System.Console.Clear();
+            return line.Substring(line.Length - this.shift, this.shift) + line.Substring(0, line.Length - this.shift);
+        }
+
+        public void Play(ConsoleColor foregroundColor, int speed)
+        {
+            Console.WindowHeight = this.Height;
+            Console.WindowWidth = this.Width + 2;
+            Console.ForegroundColor = foregroundColor;
+            Console.BackgroundColor = this.backgroundColor;
+            Console.Clear();
             bool exitCycle = false;
             do
             {
-                System.Console.SetCursorPosition(0, 0);
-                System.Console.WriteLine(this.print());
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(this.ToString());
+                this.StepBack();
                 if (Console.KeyAvailable)
                 {
                     exitCycle = (Console.ReadKey(true).Key == ConsoleKey.Escape);
@@ -117,7 +113,6 @@ namespace StripLightAdvertising
                 }
             } while (!exitCycle);
         }
-
 
     }
 }

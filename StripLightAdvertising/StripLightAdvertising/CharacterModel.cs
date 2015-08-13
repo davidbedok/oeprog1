@@ -8,48 +8,61 @@ namespace StripLightAdvertising
     public class CharacterModel
     {
 
-        private byte[][] model;
+        private const char PIXEL = '#';
 
-        public CharacterModel( char type, Random rand )
+        private readonly bool[][] content;
+
+        public int Width
         {
-            if (type == 'R')
+            get
             {
-                this.model = new byte[CharacterData.CHAR_HEIGHT][];
-                for (int i = 0; i < CharacterData.CHAR_HEIGHT; i++)
+                return this.content[0].Length;
+            }
+        }
+
+        public CharacterModel(char type)
+            : this(CharacterTrunk.GetModelContent(type))
+        {
+        }
+
+        private CharacterModel(bool[][] content)
+        {
+            this.content = content;
+        }
+
+        public override String ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int row = 0; row < content.Length; row++)
+            {
+                builder.AppendLine(this.GetRow(row));
+            }
+            return builder.ToString();
+        }
+
+        public String GetRow(int row)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int column = 0; column < content[row].Length; column++)
+            {
+                builder.Append(content[row][column] ? PIXEL : ' ');
+            }
+            return builder.ToString();
+        }
+
+        public static CharacterModel BuildRandomModel(Random random, int minWidth, int maxWidth)
+        {
+            int width = random.Next(minWidth, maxWidth + 1);
+            bool[][] content = new bool[CharacterData.HEIGHT][];
+            for (int i = 0; i < CharacterData.HEIGHT; i++)
+            {
+                content[i] = new bool[width];
+                for (int k = 0; k < width; k++)
                 {
-                    this.model[i] = new byte[CharacterData.CHAR_WIDTH];
-                    for (int j = 0; j < CharacterData.CHAR_WIDTH; j++)
-                    {
-                        this.model[i][j] = (byte)(rand.Next(2));
-                    }
+                    content[i][k] = random.Next(2) == 1;
                 }
             }
-            else
-            {
-                this.model = CharacterTrunk.getCharacterModel(type);
-            }
-        }
-
-        public string getRow(int index)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < model[index].Length; j++)
-            {
-                sb.Append(model[index][j] == 1 ? "#" : " ");
-            }
-            return sb.ToString();
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < model.Length; i++){
-                for (int j = 0; j < model[i].Length; j++){
-                    sb.Append( model[i][j] == 1 ? "#" : " ");
-                }
-                sb.AppendLine();
-            }
-            return sb.ToString();
+            return new CharacterModel(content);
         }
 
     }
