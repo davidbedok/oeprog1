@@ -8,24 +8,58 @@ namespace ConsoleMenu
     public class Program
     {
 
-        private static readonly int WINDOW_WIDTH = 100;
-        private static readonly int WINDOW_HEIGHT = 40;
-
-        private const string MENUITEM_TEST = "Test menupoint";
-        private const string MENUITEM_DUMMY = "Dummy menupoint";
-        private const string MENUITEM_CHILDMENU = "Child menu";
-        private const string MENUITEM_BACK = "Back";
-        private const string MENUITEM_EXIT = "Exit";
-
-        private static void writeMessage( int x, int y, string label)
-        {
-            System.Console.BackgroundColor = ConsoleColor.Gray;
-            System.Console.ForegroundColor = ConsoleColor.Black;
-            System.Console.SetCursorPosition(x, y);
-            System.Console.Write(label.PadRight(30));
-        }
+        private static readonly int WINDOW_WIDTH = 70;
+        private static readonly int WINDOW_HEIGHT = 25;
 
         private static void Main(string[] args)
+        {
+            TestSimpleMenu();
+        }
+
+        private static void TestSimpleMenu()
+        {
+            DrawFrame();
+
+            SimpleMenu menu = new SimpleMenu(5, 5);
+            menu.Add(10, "Lorem");
+            menu.Add(20, "Ipsum");
+            menu.Add(30, "Dolor sit");
+            menu.Add(40, "Exit");
+
+            MenuTemplate template = new MenuTemplate(ConsoleColor.Gray, ConsoleColor.Black, ConsoleColor.Yellow, ConsoleColor.DarkRed);
+            SimpleMenu childMenu = new SimpleMenu(9, 14, template);
+            childMenu.Add(31, "Consectetur");
+            childMenu.Add(32, "Adipiscing");
+            childMenu.Add(33, "Back");
+
+            MenuItem item;
+            do {
+                item = menu.Process();
+                switch (item.Id)
+                {
+                    case 10:
+                    case 20:
+                        Program.WriteMessage(1,1,item.Label);
+                        break;
+                    case 30:
+                        MenuItem childItem;
+                        do {
+                            childItem = childMenu.Process();
+                            switch (childItem.Id)
+                            {
+                                case 31:
+                                case 32:
+                                    Program.WriteMessage(1, 1, childItem.Label);
+                                    break;
+                            }
+                        } while (childItem.Id != 33);
+                        break;
+                }
+
+            } while (item.Id != 40);
+        }
+
+        private static void DrawFrame()
         {
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.White;
@@ -33,58 +67,20 @@ namespace ConsoleMenu
 
             Console.SetWindowSize(Program.WINDOW_WIDTH, Program.WINDOW_HEIGHT);
             Console.Title = "Simple Console Menu Demo";
-            System.Console.BackgroundColor = ConsoleColor.Red;
-            System.Console.ForegroundColor = ConsoleColor.White;
-            System.Console.SetCursorPosition(0,0);
-            System.Console.Write(" Simple Console Menu Demo Application @ UNI-OBUDA 2011".PadRight(Program.WINDOW_WIDTH));
-            System.Console.BackgroundColor = ConsoleColor.Gray;
-
-            SimpleMenu menu = new SimpleMenu(5, 5, 5, ConsoleColor.Blue);
-            menu.MenuItemColor = ConsoleColor.Black;
-            menu.ActiveMenuBgr = ConsoleColor.Yellow;
-            menu.addMenuItem(Program.MENUITEM_TEST);
-            menu.addMenuItem(Program.MENUITEM_DUMMY);
-            menu.addMenuItem(Program.MENUITEM_CHILDMENU);
-            menu.addMenuItem(Program.MENUITEM_EXIT);
-
-            SimpleMenu childMenu = new SimpleMenu(9, 14, 5, ConsoleColor.Gray);
-            childMenu.MenuItemColor = ConsoleColor.Black;
-            childMenu.ActiveMenuBgr = ConsoleColor.Yellow;
-            childMenu.addMenuItem(Program.MENUITEM_TEST);
-            childMenu.addMenuItem(Program.MENUITEM_DUMMY);
-            childMenu.addMenuItem(Program.MENUITEM_BACK);
-
-            int menuIndex;
-            do {
-                menuIndex = menu.process();
-                switch (menu.getActiveMenuLabel())
-                {
-                    case Program.MENUITEM_TEST:
-                        Program.writeMessage(1,1,Program.MENUITEM_TEST);
-                        break;
-                    case Program.MENUITEM_DUMMY:
-                        Program.writeMessage(1, 1, Program.MENUITEM_DUMMY);
-                        break;
-                    case Program.MENUITEM_CHILDMENU:
-
-                        int childMenuIndex;
-                        do {
-                            childMenuIndex = childMenu.process();
-                            switch (childMenu.getActiveMenuLabel())
-                            {
-                                case Program.MENUITEM_TEST:
-                                    Program.writeMessage(1, 1, Program.MENUITEM_TEST);
-                                    break;
-                                case Program.MENUITEM_DUMMY:
-                                    Program.writeMessage(1, 1, Program.MENUITEM_DUMMY);
-                                    break;
-                            }
-                        } while (!childMenu.getActiveMenuLabel().Equals(Program.MENUITEM_BACK));
-                        break;
-                }
-
-            } while (!menu.getActiveMenuLabel().Equals(Program.MENUITEM_EXIT));
-
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(0, 0);
+            Console.Write(" Simple Console Menu Demo Application @ UNI-OBUDA 2015".PadRight(Program.WINDOW_WIDTH));
+            Console.BackgroundColor = ConsoleColor.Gray;
         }
+
+        private static void WriteMessage(int x, int y, string label)
+        {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(x, y);
+            Console.Write(label.PadRight(30));
+        }
+
     }
 }

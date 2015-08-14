@@ -7,204 +7,151 @@ namespace ConsoleMenu
 {
     public class SimpleMenu
     {
+        private static readonly MenuTemplate DEFAULT_TEMPLATE = new MenuTemplate(ConsoleColor.Blue, ConsoleColor.White, ConsoleColor.Yellow, ConsoleColor.DarkRed);
+        private static readonly int MAXIMUM_MENU_ITEMS = 10;
 
-        private int top;
-        private int left;
-        private string[] menuItems;
-        private int menuIndex;
-        private int activeMenuIndex;
-        private ConsoleColor bgrColor;
-        private ConsoleColor menuItemColor;
-        private ConsoleColor activeMenuBgr;
+        private readonly MenuTemplate template;
+        private readonly int top;
+        private readonly int left;
+        private readonly MenuItem[] items;
+        private int index;
+        private int current;
 
-        private int Top
+        public SimpleMenu(int top, int left)
+            : this(top, left, DEFAULT_TEMPLATE)
         {
-            set
+        }
+
+        public SimpleMenu(int top, int left, MenuTemplate template)
+            : this(top, left, template, MAXIMUM_MENU_ITEMS)
+        {
+
+        }
+
+        public SimpleMenu(int top, int left, MenuTemplate template, int maxMenuItem)
+        {
+            this.top = top;
+            this.left = left;
+            this.template = template;
+            this.items = new MenuItem[maxMenuItem];
+            this.index = 0;
+            this.current = 0;
+        }
+
+        public void Add(int id, String label)
+        {
+            if (this.index < this.items.Length)
             {
-                if (value > 0)
+                this.items[this.index++] = new MenuItem(id, label);
+            }
+        }
+
+        public MenuItem Process()
+        {
+            ConsoleKey key;
+            do
+            {
+                this.Draw();
+                key = Console.ReadKey(true).Key;
+                switch (key)
                 {
-                    this.top = value;
+                    case ConsoleKey.UpArrow:
+                        this.Up();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        this.Down();
+                        break;
+                }
+            } while ((key != ConsoleKey.Escape) && (key != ConsoleKey.Enter));
+            return this.items[this.current];
+        }
+
+        private void Draw()
+        {
+            this.template.SetNormalColors();
+            int maxLength = this.GetTheLargestLength() + 2;
+
+            this.DrawTop(maxLength);
+            int row = 0;
+            for (int i = 0; i < this.index; i++)
+            {
+                this.DrawMenuItem(maxLength, i, ++row);
+                if (i != this.index - 1)
+                {
+                    this.DrawMiddle(maxLength, ++row);
                 }
             }
+            this.DrawBottom(maxLength, ++row);
         }
 
-        private int Left
-        {
-            set
-            {
-                if (value > 0)
-                {
-                    this.left = value;
-                }
-            }
-        }
-
-        public ConsoleColor MenuItemColor
-        {
-            get { return this.menuItemColor; }
-            set { this.menuItemColor = value; }
-        }
-
-        public ConsoleColor ActiveMenuBgr
-        {
-            get { return this.activeMenuBgr; }
-            set { this.activeMenuBgr = value; }
-        }
-
-        public SimpleMenu(int top, int left, int maxMenuItem, ConsoleColor bgrColor)
-        {
-            if (maxMenuItem < 1)
-            {
-                maxMenuItem = 1;
-            }
-            this.Top = top;
-            this.Left = left;
-            this.menuItems = new string[maxMenuItem];
-            this.menuIndex = 0;
-            this.bgrColor = bgrColor;
-            this.activeMenuIndex = 0;
-            this.menuItemColor = ConsoleColor.White;
-            this.activeMenuBgr = ConsoleColor.Yellow;
-        }
-
-        public void addMenuItem(string label)
-        {
-            if (this.menuIndex < this.menuItems.Length)
-            {
-                this.menuItems[this.menuIndex++] = label;
-            }
-        }
-
-        public void down()
-        {
-            if (this.activeMenuIndex < this.menuIndex - 1)
-            {
-                this.activeMenuIndex++;
-            }
-            else
-            {
-                this.activeMenuIndex = 0;
-            }
-        }
-
-        public void up()
-        {
-            if (this.activeMenuIndex > 0)
-            {
-                this.activeMenuIndex--;
-            }
-            else
-            {
-                this.activeMenuIndex = this.menuIndex - 1;
-            }
-        }
-
-        private int getMaxMenuItemLength()
+        private int GetTheLargestLength()
         {
             int ret = 0;
-            if ( this.menuIndex > 0 ) {
-                ret = this.menuItems[0].Length;
-                for (int i = 1; i < this.menuIndex; i++)
+            if (this.index > 0)
+            {
+                ret = this.items[0].Length;
+                for (int i = 1; i < this.index; i++)
                 {
-                    if (ret < this.menuItems[i].Length)
+                    int current = this.items[i].Length;
+                    if (ret < current)
                     {
-                        ret = this.menuItems[i].Length;
+                        ret = current;
                     }
                 }
             }
             return ret;
         }
 
-        private void drawMenuTop(int maxLength)
+        private void DrawTop(int maxLength)
         {
-            System.Console.SetCursorPosition(this.left, this.top);
-            System.Console.WriteLine("╔" + "".PadLeft(maxLength, '═') + "╗");
+            Console.SetCursorPosition(this.left, this.top);
+            Console.WriteLine("╔" + "".PadLeft(maxLength, '═') + "╗");
         }
 
-        private void drawMenuMiddle(int maxLength, int row)
+        private void DrawMenuItem(int maxLength, int index, int row)
         {
-            System.Console.SetCursorPosition(this.left, this.top + row);
-            System.Console.WriteLine("╠" + "".PadLeft(maxLength, '═') + "╣");
+            Console.SetCursorPosition(this.left, this.top + row);
+            this.template.SetNormalColors();
+            Console.Write("│");
+            this.SetColors(index);
+            Console.Write(" " + this.items[index].Label.PadRight(maxLength - 1, ' '));
+            this.template.SetNormalColors();
+            Console.Write("│");
         }
 
-        private void drawMenuBottom(int maxLength, int row)
+        private void SetColors(int index)
         {
-            System.Console.SetCursorPosition(this.left, this.top + row);
-            System.Console.WriteLine("╚" + "".PadLeft(maxLength, '═') + "╝");
-        }
-
-        private void setMenuItemBgr( int i ){
-            if (i == this.activeMenuIndex)
+            if (index == this.current)
             {
-                System.Console.BackgroundColor = this.activeMenuBgr;
+                this.template.SetHighlightedColors();
             }
             else
             {
-                System.Console.BackgroundColor = this.bgrColor;
+                this.template.SetNormalColors();
             }
         }
 
-        public void draw()
+        private void DrawMiddle(int maxLength, int row)
         {
-            System.Console.ForegroundColor = this.menuItemColor;
-            System.Console.BackgroundColor = this.bgrColor;
-            int maxLength = this.getMaxMenuItemLength();
-
-            this.drawMenuTop(maxLength);
-
-            int row = 0;
-            for (int i = 0; i < this.menuIndex; i++)
-            {
-                System.Console.SetCursorPosition(this.left, this.top + ++row);
-                System.Console.BackgroundColor = this.bgrColor;
-                System.Console.Write("│");
-                this.setMenuItemBgr(i);
-                System.Console.Write(this.menuItems[i].PadRight(maxLength, ' '));
-                System.Console.BackgroundColor = this.bgrColor;
-                System.Console.Write("│");
-
-                if (i != this.menuIndex - 1)
-                {
-                    this.drawMenuMiddle(maxLength, ++row);
-                }
-            }
-            this.drawMenuBottom(maxLength, ++row);
+            Console.SetCursorPosition(this.left, this.top + row);
+            Console.WriteLine("╠" + "".PadLeft(maxLength, '═') + "╣");
         }
 
-        public int process()
+        private void DrawBottom(int maxLength, int row)
         {
-            ConsoleKey cKey;
-            do
-            {
-                this.draw();
-                cKey = Console.ReadKey(true).Key;
-                switch (cKey)
-                {
-                    case ConsoleKey.UpArrow:
-                        this.up();
-                        break;
-                    case ConsoleKey.DownArrow:
-                        this.down();
-                        break;
-                }
-            } while ((cKey != ConsoleKey.Escape) && (cKey != ConsoleKey.Enter));
-            return this.activeMenuIndex;
+            Console.SetCursorPosition(this.left, this.top + row);
+            Console.WriteLine("╚" + "".PadLeft(maxLength, '═') + "╝");
         }
 
-        private string getMenuLabelByIndex(int index){
-            string ret = "";
-            if (index < this.menuIndex)
-            {
-                ret = this.menuItems[index];
-            }
-            return ret;
-        }
-
-        public string getActiveMenuLabel()
+        private void Down()
         {
-            return this.getMenuLabelByIndex(this.activeMenuIndex);
+            this.current = this.current < this.index - 1 ? this.current + 1 : 0;
         }
 
+        private void Up()
+        {
+            this.current = this.current > 0 ? this.current - 1 : this.index - 1;
+        }
 
     }
 }

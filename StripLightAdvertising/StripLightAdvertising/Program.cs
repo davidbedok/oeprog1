@@ -35,7 +35,7 @@ namespace StripLightAdvertising
 
         private static void TestAdvertisement()
         {
-            Advertisement ad = new Advertisement("OBUDAI EGYETEM", ConsoleColor.Black);
+            Advertisement ad = new Advertisement("OBUDAI EGYETEM");
             Console.WriteLine(ad);
             ad.StepBack();
             ad.StepBack();
@@ -45,8 +45,8 @@ namespace StripLightAdvertising
 
         private static void TestAdvertisementMotion()
         {
-            Advertisement ad = new Advertisement("OBUDAI EGYETEM ", ConsoleColor.White);
-            ad.Play(ConsoleColor.DarkBlue, 100);
+            Advertisement ad = new Advertisement("OBUDAI EGYETEM ");
+            ad.Play(ConsoleColor.White, ConsoleColor.DarkBlue, 100);
         }
 
     }
