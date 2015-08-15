@@ -33,17 +33,19 @@ namespace ConsoleMenu
             childMenu.Add(33, "Back");
 
             MenuItem item;
-            do {
+            do
+            {
                 item = menu.Process();
                 switch (item.Id)
                 {
                     case 10:
                     case 20:
-                        Program.WriteMessage(1,1,item.Label);
+                        Program.WriteMessage(1, 1, item.Label);
                         break;
                     case 30:
                         MenuItem childItem;
-                        do {
+                        do
+                        {
                             childItem = childMenu.Process();
                             switch (childItem.Id)
                             {

@@ -7,18 +7,16 @@ namespace ConsoleMenu
 {
     public class SimpleMenu
     {
-        private static readonly MenuTemplate DEFAULT_TEMPLATE = new MenuTemplate(ConsoleColor.Blue, ConsoleColor.White, ConsoleColor.Yellow, ConsoleColor.DarkRed);
         private static readonly int MAXIMUM_MENU_ITEMS = 10;
 
         private readonly MenuTemplate template;
-        private readonly int top;
-        private readonly int left;
+        private readonly Position position;
         private readonly MenuItem[] items;
         private int index;
         private int current;
 
         public SimpleMenu(int top, int left)
-            : this(top, left, DEFAULT_TEMPLATE)
+            : this(top, left, MenuTemplate.DEFAULT_TEMPLATE)
         {
         }
 
@@ -30,8 +28,7 @@ namespace ConsoleMenu
 
         public SimpleMenu(int top, int left, MenuTemplate template, int maxMenuItem)
         {
-            this.top = top;
-            this.left = left;
+            this.position = new Position(top, left);
             this.template = template;
             this.items = new MenuItem[maxMenuItem];
             this.index = 0;
@@ -62,13 +59,23 @@ namespace ConsoleMenu
                         this.Down();
                         break;
                 }
-            } while ((key != ConsoleKey.Escape) && (key != ConsoleKey.Enter));
+            } while (key != ConsoleKey.Enter);
             return this.items[this.current];
+        }
+
+        private void Down()
+        {
+            this.current = this.current < this.index - 1 ? this.current + 1 : 0;
+        }
+
+        private void Up()
+        {
+            this.current = this.current > 0 ? this.current - 1 : this.index - 1;
         }
 
         private void Draw()
         {
-            this.template.SetNormalColors();
+            this.template.Normal.SetColors();
             int maxLength = this.GetTheLargestLength() + 2;
 
             this.DrawTop(maxLength);
@@ -104,54 +111,38 @@ namespace ConsoleMenu
 
         private void DrawTop(int maxLength)
         {
-            Console.SetCursorPosition(this.left, this.top);
-            Console.WriteLine("╔" + "".PadLeft(maxLength, '═') + "╗");
+            this.position.SetCursor(0);
+            Console.WriteLine("O" + "".PadLeft(maxLength, '-') + "O");
         }
 
         private void DrawMenuItem(int maxLength, int index, int row)
         {
-            Console.SetCursorPosition(this.left, this.top + row);
-            this.template.SetNormalColors();
-            Console.Write("│");
+            this.position.SetCursor(row);
+            this.template.Normal.SetColors();
+            Console.Write("|");
             this.SetColors(index);
             Console.Write(" " + this.items[index].Label.PadRight(maxLength - 1, ' '));
-            this.template.SetNormalColors();
-            Console.Write("│");
+            this.template.Normal.SetColors();
+            Console.Write("|");
         }
 
         private void SetColors(int index)
         {
-            if (index == this.current)
-            {
-                this.template.SetHighlightedColors();
-            }
-            else
-            {
-                this.template.SetNormalColors();
-            }
+            (index == this.current ? this.template.Highlighted : this.template.Normal).SetColors();
         }
 
         private void DrawMiddle(int maxLength, int row)
         {
-            Console.SetCursorPosition(this.left, this.top + row);
-            Console.WriteLine("╠" + "".PadLeft(maxLength, '═') + "╣");
+            this.position.SetCursor(row);
+            Console.WriteLine("O" + "".PadLeft(maxLength, '-') + "O");
         }
 
         private void DrawBottom(int maxLength, int row)
         {
-            Console.SetCursorPosition(this.left, this.top + row);
-            Console.WriteLine("╚" + "".PadLeft(maxLength, '═') + "╝");
+            this.position.SetCursor(row);
+            Console.WriteLine("O" + "".PadLeft(maxLength, '-') + "O");
         }
 
-        private void Down()
-        {
-            this.current = this.current < this.index - 1 ? this.current + 1 : 0;
-        }
-
-        private void Up()
-        {
-            this.current = this.current > 0 ? this.current - 1 : this.index - 1;
-        }
 
     }
 }

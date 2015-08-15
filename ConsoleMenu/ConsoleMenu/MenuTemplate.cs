@@ -8,49 +8,30 @@ namespace ConsoleMenu
     public class MenuTemplate
     {
 
-        private readonly ConsoleColor backgroundColor;
-        private readonly ConsoleColor itemColor;
-        private readonly ConsoleColor highlightedBackgroundColor;
-        private readonly ConsoleColor highlightedItemColor;
+        public static readonly MenuTemplate DEFAULT_TEMPLATE = new MenuTemplate(MenuColor.DEFAULT_NORMAL, MenuColor.DEFAULT_HIGHLIGHTED);
 
-        public ConsoleColor BackgroundColor
+        private readonly MenuColor normal;
+        private readonly MenuColor highlighted;
+
+        public MenuColor Normal
         {
-            get { return this.backgroundColor; }
+            get { return this.normal; }
         }
 
-        public ConsoleColor ItemColor
+        public MenuColor Highlighted
         {
-            get { return this.itemColor; }
+            get { return this.highlighted; }
         }
 
-        public ConsoleColor HighlightedBackgroundColor
+        public MenuTemplate(ConsoleColor normalBackground, ConsoleColor normalForeground, ConsoleColor highlightedBackground, ConsoleColor highlightedForeground)
+            : this(new MenuColor(normalBackground, normalForeground), new MenuColor(highlightedBackground, highlightedForeground))
         {
-            get { return this.highlightedBackgroundColor; }
         }
 
-        public ConsoleColor HighlightedItemColor
+        public MenuTemplate(MenuColor normal, MenuColor highlighted)
         {
-            get { return this.highlightedItemColor; }
-        }
-
-        public MenuTemplate(ConsoleColor backgroundColor, ConsoleColor itemColor, ConsoleColor selectedBackgroundColor, ConsoleColor selectedItemColor)
-        {
-            this.backgroundColor = backgroundColor;
-            this.itemColor = itemColor;
-            this.highlightedBackgroundColor = selectedBackgroundColor;
-            this.highlightedItemColor = selectedItemColor;
-        }
-
-        public void SetNormalColors()
-        {
-            Console.BackgroundColor = this.backgroundColor;
-            Console.ForegroundColor = this.itemColor;
-        }
-
-        public void SetHighlightedColors()
-        {
-            Console.BackgroundColor = this.highlightedBackgroundColor;
-            Console.ForegroundColor = this.highlightedItemColor;
+            this.normal = normal;
+            this.highlighted = highlighted;
         }
 
     }
