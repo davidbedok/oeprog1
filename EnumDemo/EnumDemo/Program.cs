@@ -10,41 +10,42 @@ namespace EnumDemo
 
         public static void testSimpleEdgeType()
         {
-            System.Console.WriteLine("# Test Simple Edge Type");
+            Console.WriteLine("# Test Simple Edge Type");
 
             SimpleEdgeType normalEdge = SimpleEdgeType.NORMAL;
-            System.Console.WriteLine(normalEdge + " - " + (int)normalEdge);
-            System.Console.WriteLine();
+            Console.WriteLine(normalEdge + " --> " + (int)normalEdge);
+            
+            SimpleEdgeType reset = (SimpleEdgeType)1;
+            Console.WriteLine(reset + " --> " + (int)reset + " (" + Enum.IsDefined(typeof(SimpleEdgeType), reset) + ")");
 
-            SimpleEdgeType reset = (SimpleEdgeType)2;
-            System.Console.WriteLine(reset + " - " + (int)reset);
-            System.Console.WriteLine();
+            SimpleEdgeType unknown = (SimpleEdgeType)42;
+            Console.WriteLine(unknown + " --> " + (int)unknown + " (" + Enum.IsDefined(typeof(SimpleEdgeType), unknown) + ")");
 
-            SimpleEdgeType edgeType = new SimpleEdgeType();
-            System.Console.WriteLine(edgeType + " - " + (int)edgeType);
-            System.Console.WriteLine();
-
+            SimpleEdgeType zeroEdgeType = new SimpleEdgeType();
+            Console.WriteLine("'new' " + zeroEdgeType + " --> " + (int)zeroEdgeType);
+            
             SimpleEdgeType inhibitor = (SimpleEdgeType)Enum.Parse(typeof(SimpleEdgeType), "INHIBITOR");
-            System.Console.WriteLine(inhibitor + " - " + (int)inhibitor);
-            System.Console.WriteLine();
+            Console.WriteLine(inhibitor + " --> " + (int)inhibitor);
+            
+            String inhibitorStr = Enum.GetName(typeof(SimpleEdgeType), SimpleEdgeType.INHIBITOR);
+            Console.WriteLine(inhibitorStr);
 
-            string inhibitorStr = Enum.GetName(typeof(SimpleEdgeType), SimpleEdgeType.INHIBITOR);
-            System.Console.WriteLine(inhibitorStr);
-            System.Console.WriteLine();
+            SimpleEdgeType whatIsIt = SimpleEdgeType.NORMAL + 2;
+            Console.WriteLine(whatIsIt + " --> " + (int)inhibitor);
 
-            SimpleEdgeType[] enums = (SimpleEdgeType[])Enum.GetValues(typeof(SimpleEdgeType));
-            for (int i = 0; i < enums.Length; i++)
+            Console.WriteLine("All values:");
+            SimpleEdgeType[] edgeTypes = (SimpleEdgeType[])Enum.GetValues(typeof(SimpleEdgeType));
+            for (int i = 0; i < edgeTypes.Length; i++)
             {
-                System.Console.WriteLine(enums[i] + " - " + (int)enums[i]);
+                Console.WriteLine(edgeTypes[i] + " --> " + (int)edgeTypes[i]);
             }
 
-            string[] enumStrs = Enum.GetNames(typeof(SimpleEdgeType));
-            for (int i = 0; i < enums.Length; i++)
+            Console.WriteLine("All names:");
+            String[] enumStrs = Enum.GetNames(typeof(SimpleEdgeType));
+            for (int i = 0; i < edgeTypes.Length; i++)
             {
-                System.Console.WriteLine(enumStrs[i]);
+                Console.WriteLine(enumStrs[i]);
             }
-
-            System.Console.WriteLine();
         }
 
         public static void testSimpleEdgeTypeWithExtension()
@@ -52,13 +53,9 @@ namespace EnumDemo
             System.Console.WriteLine("# Test Simple Edge Type with Extension (from .NET 3.0)");
 
             SimpleEdgeType normalEdge = SimpleEdgeType.NORMAL;
-            System.Console.WriteLine("customToString: " + normalEdge.customToString());
-            System.Console.WriteLine("getDefault: " + SimpleEdgeType.INHIBITOR.getDefault());
-            System.Console.WriteLine("customCalculate: " + SimpleEdgeType.INHIBITOR.customCalculate());
-            System.Console.WriteLine("customCalculate with param: " + SimpleEdgeType.INHIBITOR.customCalculate(3));
-    
-            System.Console.WriteLine();
-
+            Console.WriteLine("Label of " + normalEdge + " edge type: " + normalEdge.getLabel());
+            Console.WriteLine("getDefault: " + SimpleEdgeType.INHIBITOR.getDefault());
+            Console.WriteLine("Custom ordinal of RESET: " + SimpleEdgeType.RESET.getCustomOrdinal(5));
         }
 
         public static void testEdgeTypeWithAttribute()
@@ -92,10 +89,10 @@ namespace EnumDemo
 
         private static void Main(string[] args)
         {
-            Program.testSimpleEdgeType();
+            // Program.testSimpleEdgeType();
             Program.testSimpleEdgeTypeWithExtension();
-            Program.testEdgeTypeWithAttribute();
-            Program.testEdgeType();
+            // Program.testEdgeTypeWithAttribute();
+            // Program.testEdgeType();
         }
     }
 }

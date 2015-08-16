@@ -13,17 +13,12 @@ namespace EnumDemo
             return SimpleEdgeType.NORMAL;
         }
 
-        public static string customToString(this SimpleEdgeType edgeType)
+        public static String getLabel(this SimpleEdgeType edgeType)
         {
-            return "ET_" + edgeType.ToString();
+            return new EdgeTypeLabel().getLabel(edgeType);
         }
 
-        public static int customCalculate(this SimpleEdgeType edgeType)
-        {
-            return ((int)edgeType * 5);
-        }
-
-        public static int customCalculate(this SimpleEdgeType edgeType, int param)
+        public static int getCustomOrdinal(this SimpleEdgeType edgeType, int param)
         {
             return ((int)edgeType * param);
         }

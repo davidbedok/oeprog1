@@ -8,12 +8,12 @@ namespace EnumDemo
 
     public enum SimpleEdgeType /* : int */
     {
-        NORMAL /* = -3 */,
+        NORMAL = -1,
         INHIBITOR,
         RESET
     }
 
-    public enum SimpleEdgeType2 : uint
+    public enum SimpleUnsignedEdgeType : uint
     {
         NORMAL,
         INHIBITOR,
