@@ -49,6 +49,7 @@
     <Compile Include="CustomHelpers.cs" />
     <Compile Include="EdgeType.cs" />
     <Compile Include="EdgeTypeAttribute.cs" />
+    <Compile Include="EdgeTypeClass.cs" />
     <Compile Include="EdgeTypeLabel.cs" />
     <Compile Include="EdgeTypeWithAttribute.cs" />
     <Compile Include="Program.cs" />

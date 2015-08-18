@@ -14,7 +14,7 @@ namespace EnumDemo
 
             SimpleEdgeType normalEdge = SimpleEdgeType.NORMAL;
             Console.WriteLine(normalEdge + " --> " + (int)normalEdge);
-            
+
             SimpleEdgeType reset = (SimpleEdgeType)1;
             Console.WriteLine(reset + " --> " + (int)reset + " (" + Enum.IsDefined(typeof(SimpleEdgeType), reset) + ")");
 
@@ -23,10 +23,10 @@ namespace EnumDemo
 
             SimpleEdgeType zeroEdgeType = new SimpleEdgeType();
             Console.WriteLine("'new' " + zeroEdgeType + " --> " + (int)zeroEdgeType);
-            
+
             SimpleEdgeType inhibitor = (SimpleEdgeType)Enum.Parse(typeof(SimpleEdgeType), "INHIBITOR");
             Console.WriteLine(inhibitor + " --> " + (int)inhibitor);
-            
+
             String inhibitorStr = Enum.GetName(typeof(SimpleEdgeType), SimpleEdgeType.INHIBITOR);
             Console.WriteLine(inhibitorStr);
 
@@ -64,14 +64,14 @@ namespace EnumDemo
 
             System.Console.WriteLine("Reset NAME: " + CustomHelpers.getAttribute(EdgeTypeWithAttribute.RESET).Name);
             System.Console.WriteLine("Reset VALUE: " + CustomHelpers.getAttribute(EdgeTypeWithAttribute.RESET).Value);
-            
+
             System.Console.WriteLine();
         }
 
         public static void testEdgeType()
         {
             System.Console.WriteLine("# Test Edge Type");
-            
+
             System.Console.WriteLine(EdgeType.RESET);
             System.Console.WriteLine(EdgeType.RESET.Name);
             System.Console.WriteLine(EdgeType.RESET.Value);
@@ -87,12 +87,31 @@ namespace EnumDemo
             System.Console.WriteLine();
         }
 
+        private static void testEdgeTypeClass()
+        {
+            EdgeTypeClass normal = EdgeTypeClass.NORMAL;
+            Console.WriteLine(normal + " --> " + normal.GetOrdinal());
+
+            EdgeTypeClass inhibitor = EdgeTypeClass.Values[1];
+            Console.WriteLine(inhibitor + " --> " + inhibitor.GetOrdinal());
+
+            EdgeTypeClass reset = EdgeTypeClass.Parse("RESET");
+            Console.WriteLine(reset + " --> " + reset.GetOrdinal());
+
+            foreach (EdgeTypeClass edgeType in EdgeTypeClass.Values)
+            {
+                Console.WriteLine(edgeType + " --> " + edgeType.GetOrdinal());
+            }
+        }
+
         private static void Main(string[] args)
         {
             // Program.testSimpleEdgeType();
-            Program.testSimpleEdgeTypeWithExtension();
+            // Program.testSimpleEdgeTypeWithExtension();
             // Program.testEdgeTypeWithAttribute();
             // Program.testEdgeType();
+
+            testEdgeTypeClass();
         }
     }
 }

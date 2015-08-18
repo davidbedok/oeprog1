@@ -16,12 +16,14 @@ namespace EnumDemo
 
         public static EdgeType[] Values
         {
-            get {
+            get
+            {
                 return EdgeType.values.ToArray();
             }
         }
 
-        private EdgeType(string name, string value) : base(name, value)
+        private EdgeType(string name, string value)
+            : base(name, value)
         {
             EdgeType.addNewItem(this);
         }
