@@ -21,12 +21,17 @@ namespace UnitTestDemo
             this.money = money;
         }
 
-        public void win(int amount)
+        public void Pay(int bet)
+        {
+            this.money -= bet;
+        }
+
+        public void Win(int amount)
         {
             this.money += amount;
         }
 
-        public void lose(int amount)
+        public void Lose(int amount)
         {
             this.money -= amount;
             if (this.money < 0)

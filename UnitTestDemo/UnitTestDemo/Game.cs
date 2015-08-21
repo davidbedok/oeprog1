@@ -27,22 +27,23 @@ namespace UnitTestDemo
 
         public void Play(int bet)
         {
+            this.player.Pay(bet);
             int firstRoll = this.dice.Roll();
             int secondRoll = this.dice.Roll();
             if (firstRoll == secondRoll)
             {
                 if (firstRoll == SPECIAL_ROLL_VALUE)
                 {
-                    this.player.win(bet * 2);
+                    this.player.Win(bet * 3);
                 }
                 else
                 {
-                    this.player.win(bet);
+                    this.player.Win(bet * 2);
                 }
             }
             else if (Math.Abs(firstRoll - secondRoll) > 1)
             {
-                this.player.lose(bet);
+                this.player.Lose(bet);
             }
         }
 

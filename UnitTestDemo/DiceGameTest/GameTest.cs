@@ -12,23 +12,21 @@ namespace DiceGameTest
         private const int SPECIAL_ROLL_VALUE = 6;
 
         [TestMethod]
-        public void Player_loses_money_when_the_rolled_numbers_are_far_away()
+        public void Player_loses_the_bet_twice_when_the_rolled_numbers_are_far_away()
         {
-
-
             FakeRandomWrapper random = new FakeRandomWrapper(1, 3);
             Game game = new Game(random, 1000);
-            game.Play(300);
-            Assert.AreEqual(700, game.Player.Money);
+            game.Play(250);
+            Assert.AreEqual(500, game.Player.Money);
         }
 
         [TestMethod]
-        public void Player_does_not_lose_money_when_the_rolled_numbers_are_not_far_away()
+        public void Player_loses_the_bet_when_the_rolled_numbers_are_not_far_away()
         {
             FakeRandomWrapper random = new FakeRandomWrapper(2, 3);
             Game game = new Game(random, 1000);
             game.Play(300);
-            Assert.AreEqual(1000, game.Player.Money);
+            Assert.AreEqual(700, game.Player.Money);
         }
 
         [TestMethod]
