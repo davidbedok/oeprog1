@@ -53,6 +53,7 @@
     <Compile Include="FakeRandomWrapper.cs" />
     <Compile Include="GameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CalculatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnitTestDemo\DiceGame.csproj">

@@ -4,6 +4,7 @@ using UnitTestDemo;
 
 namespace DiceGameTest
 {
+
     [TestClass]
     public class GameTest
     {
@@ -13,6 +14,8 @@ namespace DiceGameTest
         [TestMethod]
         public void Player_loses_money_when_the_rolled_numbers_are_far_away()
         {
+
+
             FakeRandomWrapper random = new FakeRandomWrapper(1, 3);
             Game game = new Game(random, 1000);
             game.Play(300);
@@ -55,6 +58,7 @@ namespace DiceGameTest
             game.Play(600);
             Assert.AreEqual(400, game.Player.Money);
             game.Play(600);
+            Assert.Fail();
         }
 
     }
