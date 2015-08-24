@@ -5,11 +5,11 @@ using System.Text;
 
 namespace HunCard.CardEnum
 {
-    public enum CardSuit
+    public enum CardSuit : short
     {
-        Acorns = 1, // Makk
-        Bells = 2, // Tok
-        Leaves = 3, // Zold
-        Hearts = 4 // Sziv
+        Acorns = 1,
+        Bells = 2,
+        Leaves = 3,
+        Hearts = 4
     }
 }

@@ -17,18 +17,18 @@ namespace HunCard
             this.rank = rank;
         }
 
-        public int value()
+        public int GetValue()
         {
             return (int)suit * (int)rank;
         }
 
         public override string ToString()
         {
-            return ("Card: " + suit.ToString() + ":" + rank.ToString() + " value: " + this.value());
+            return ("Card: " + suit.ToString() + ":" + rank.ToString() + " value: " + this.GetValue());
         }
 
         // never use, only test
-        public static Card getRandomCard(Random rand)
+        public static Card GetRandomCard(Random rand)
         {
             // values of CardSuits have a programmed rule --> we use it --> evil design pattern
             int randSuit = rand.Next(1, 4);

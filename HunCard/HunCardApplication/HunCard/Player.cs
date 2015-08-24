@@ -8,66 +8,62 @@ namespace HunCard
 {
     public class Player : System.Object
     {
-        public const int NUM_OF_PLAYER_CARDS = 3;
+        public const int NUMBER_OF_PLAYER_CARDS = 3;
 
-        private string name;
-        private Card[] cards;
-        private int cardNum;
+        private readonly String name;
+        private readonly Card[] cards;
+        private int cardIndex;
 
-        // indexer
         public Card this[int index]
         {
             get { return this.cards[index]; }
             set { this.cards[index] = value; }
         }
 
-        // for test indexer
-        public Card getCardsItem(int index)
+        public Card GetCard(int index)
         {
             return this.cards[index];
         }
 
-        // for test indexer
-        public void setCardsItem(int index, Card value)
+        public void SetCard(int index, Card value)
         {
             this.cards[index] = value;
         }
 
-        public Player(string name)
+        public Player(String name)
         {
             this.name = name;
-            this.cards = new Card[Player.NUM_OF_PLAYER_CARDS];
-            this.cardNum = 0;
+            this.cards = new Card[Player.NUMBER_OF_PLAYER_CARDS];
+            this.cardIndex = 0;
         }
 
-        public void addCard(Card card)
+        public void AddCard(Card card)
         {
-            if (this.cardNum < Player.NUM_OF_PLAYER_CARDS)
+            if (this.cardIndex < Player.NUMBER_OF_PLAYER_CARDS)
             {
-                this.cards[this.cardNum++] = card;
+                this.cards[this.cardIndex++] = card;
             }
         }
 
         // not use
-        public void addCard(CardSuit cardSuit, CardRank cardRank)
+        public void AddCard(CardSuit cardSuit, CardRank cardRank)
         {
-            this.addCard(new Card(cardSuit, cardRank));
+            this.AddCard(new Card(cardSuit, cardRank));
         }
 
-        public void dropCards()
+        public void DropCards()
         {
-            this.cardNum = 0;
+            this.cardIndex = 0;
         }
 
-        public int getCardsValue()
+        public int GetCardsValue()
         {
             int ret = 0;
-            for (int i = 0; i < this.cardNum; i++)
-            // for (int i = 0; i < Player.NUM_OF_PLAYER_CARDS; i++)
+            for (int i = 0; i < this.cardIndex; i++)
             {
                 if (this.cards[i] != null)
                 {
-                    ret += cards[i].value();
+                    ret += cards[i].GetValue();
                 }
             }
             return ret;
@@ -75,18 +71,18 @@ namespace HunCard
 
         public override string ToString()
         {
-            // StringBuilder..
-            string str = "Player " + this.name + "\n";
-            for (int i = 0; i < this.cardNum; i++)
-            // for (int i = 0; i < Player.NUM_OF_PLAYER_CARDS; i++)
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("Player " + this.name);
+            for (int i = 0; i < this.cardIndex; i++)
             {
                 if (this.cards[i] != null)
                 {
-                    str += "(" + (i + 1) + ") " + this.cards[i].ToString() + "\n";
+                    builder.Append("(" + (i + 1) + ") ");
+                    builder.AppendLine(this.cards[i].ToString());
                 }
             }
-            str += "SumValues: " + this.getCardsValue() + "\n";
-            return str;
+            builder.AppendLine("SumValues: " + this.GetCardsValue());
+            return builder.ToString();
         }
 
     }

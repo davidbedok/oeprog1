@@ -5,15 +5,15 @@ using System.Text;
 
 namespace HunCard.CardEnum
 {
-    public enum CardRank /* : short */
+    public enum CardRank : short
     {
         r7 = 7,
         r8 = 8,
         r9 = 9,
         r10 = 10,
-        Under = 15, // Also
-        Over = 20, // Felso
-        King = 30, // Kiraly
-        Ace = 50 // Asz
+        Under = 15,
+        Over = 20,
+        King = 30,
+        Ace = 50
     }
 }

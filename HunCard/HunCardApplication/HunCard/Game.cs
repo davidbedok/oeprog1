@@ -7,97 +7,103 @@ namespace HunCard
 {
     public class Game : System.Object
     {
-        private Player[] players;
-        private int numOfPlayer;
-        private int maxNumOfPlayer;
-        private Deck gameDeck;
+        private readonly Player[] players;
+        private readonly Deck deck;
+        private int numberOfPlayers;
 
-        // indexer
         public Player this[int index]
         {
             get { return this.players[index]; }
             set { this.players[index] = value; }
         }
 
-        public Game(Random rand, int maxNumOfPlayer)
+        public Game(Random rand, int maxNumberOfPlayers)
         {
-            this.maxNumOfPlayer = maxNumOfPlayer;
-            this.players = new Player[maxNumOfPlayer];
-            this.gameDeck = new Deck(rand);
-            this.numOfPlayer = 0;
+            this.players = new Player[maxNumberOfPlayers];
+            this.deck = new Deck(rand);
+            this.numberOfPlayers = 0;
         }
 
-        public void addPlayer(Player player)
+        public void AddPlayer(Player player)
         {
-            if (this.numOfPlayer < this.maxNumOfPlayer)
+            if (this.numberOfPlayers < this.players.Length)
             {
-                this.players[this.numOfPlayer++] = player;
+                this.players[this.numberOfPlayers++] = player;
             }
         }
 
-        public void addPlayer(string name)
+        public void AddPlayer(String name)
         {
-            this.addPlayer(new Player(name));
+            this.AddPlayer(new Player(name));
         }
 
-        private void rotate()
+        private void RotateDeck()
         {
-            this.gameDeck.rotate();
+            this.deck.Rotate();
         }
 
-        private void dealer()
+        private void Division()
         {
-            for (int i = 0; i < this.numOfPlayer; i++)
+            for (int i = 0; i < this.numberOfPlayers; i++)
             {
-                for (int j = 0; j < Player.NUM_OF_PLAYER_CARDS; j++)
+                for (int k = 0; k < Player.NUMBER_OF_PLAYER_CARDS; k++)
+                {
+                    this.players[i].AddCard(this.deck.GetTopCard());
+                }
+            }
+        }
+
+        private void DivisionWithIndexer()
+        {
+            for (int i = 0; i < this.numberOfPlayers; i++)
+            {
+                for (int k = 0; k < Player.NUMBER_OF_PLAYER_CARDS; k++)
                 {
                     // [i] --> array index (this.players --> array type)
-                    // [j] --> indexer index ( this.players[i] --> Player --> class type)
-                    // this.players[i][j] = this.gamedeck.getTopCard();
-
-                    // without indexer
-                    // this.players[i].setCardsItem(j, this.gamedeck.getTopCard());
-
-                    // best solution
-                    this.players[i].addCard(this.gameDeck.getTopCard());
+                    // [k] --> indexer index ( this.players[i] --> Player --> class type)
+                    this.players[i][k] = this.deck.GetTopCard();
                 }
             }
         }
 
-        private Player getWinner (){
+        private Player GetWinner()
+        {
             Player winner = null;
-            if ( this.numOfPlayer > 0 ){
-                int max = this.players[0].getCardsValue();
-                int maxpos = 0;
-                for (int i = 1; i < this.numOfPlayer; i++)
+            if (this.numberOfPlayers > 0)
+            {
+                int maxValue = this.players[0].GetCardsValue();
+                int maxPosition = 0;
+                for (int i = 1; i < this.numberOfPlayers; i++)
                 {
-                    if (this.players[i].getCardsValue() > max)
+                    if (this.players[i].GetCardsValue() > maxValue)
                     {
-                        max = this.players[i].getCardsValue();
-                        maxpos = i;
+                        maxValue = this.players[i].GetCardsValue();
+                        maxPosition = i;
                     }
                 }
-                winner = this.players[maxpos];
+                winner = this.players[maxPosition];
             }
             return winner;
         }
 
-        public Player newGame()
+        public Player NewGame()
         {
-            this.rotate();
-            this.dealer();
-            return this.getWinner();
+            this.RotateDeck();
+            this.Division();
+            return this.GetWinner();
         }
 
         public override string ToString()
         {
-            // StringBuilder
-            string str = "Game:\n";
-            for (int i = 0; i < this.numOfPlayer; i++) {
-                str += "["+(i+1)+"] " + this.players[i].ToString();
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("Game:");
+            for (int i = 0; i < this.numberOfPlayers; i++)
+            {
+                builder.Append("[" + (i + 1) + "] ");
+                builder.AppendLine(this.players[i].ToString());
             }
-            str += this.gameDeck.ToString();
-            return str;
+            builder.Append(this.deck.ToString());
+            return builder.ToString();
         }
 
     }

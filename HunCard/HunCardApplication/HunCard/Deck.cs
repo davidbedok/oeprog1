@@ -8,83 +8,76 @@ namespace HunCard
 {
     public class Deck : System.Object
     {
-        // const: static readonly
-        // byte, char, short, int, long, float, double, decimal, bool, string, an enum type
-        // only possible values for constants of reference types are string and null
-        // allow public visibility
-        private const int NUM_OF_CARDS = 32;
+        private const int NUMBER_OF_CARDS = 32;
+        private const int NUMBER_OF_SWAPS = 100;
 
-        // can be any reference types
-        // allow public visibility (static readonly)
-        public static readonly int NUM_ROTATE = 100;
-
-        private Card[] cards;
+        private readonly Card[] cards;
+        private readonly Random rand;
         private int topCardIndex;
-        private Random rand;
 
         public Deck(Random rand)
         {
             this.rand = rand;
-            this.cards = new Card[Deck.NUM_OF_CARDS];
-            CardSuit[] cardSuits = (CardSuit[])Enum.GetValues(typeof(CardSuit));
-            CardRank[] cardRanks = (CardRank[])Enum.GetValues(typeof(CardRank));
-            for (int i = 0; i < cardSuits.Length; i++)
+            this.cards = new Card[Deck.NUMBER_OF_CARDS];
+            CardSuit[] suits = (CardSuit[])Enum.GetValues(typeof(CardSuit));
+            CardRank[] ranks = (CardRank[])Enum.GetValues(typeof(CardRank));
+            for (int i = 0; i < suits.Length; i++)
             {
-                for (int j = 0; j < cardRanks.Length; j++)
+                for (int k = 0; k < ranks.Length; k++)
                 {
-                    this.cards[(i * 8) + j] = new Card(cardSuits[i], cardRanks[j]);
+                    this.cards[(i * 8) + k] = new Card(suits[i], ranks[k]);
                 }
             }
             this.topCardIndex = 0;
         }
 
-        private void changeCards(int indexA, int indexB)
+        private void SwapCards(int indexA, int indexB)
         {
             Card tmp = this.cards[indexA];
             this.cards[indexA] = this.cards[indexB];
             this.cards[indexB] = tmp;
         }
 
-        public void rotate()
+        public void Rotate()
         {
-            this.rotate(Deck.NUM_ROTATE);
+            this.Rotate(Deck.NUMBER_OF_SWAPS);
         }
 
-        public void rotate(int time)
+        public void Rotate(int time)
         {
             for (int i = 0; i < time; i++)
             {
-                this.changeCards(this.rand.Next(Deck.NUM_OF_CARDS), this.rand.Next(Deck.NUM_OF_CARDS));
+                this.SwapCards(this.rand.Next(Deck.NUMBER_OF_CARDS), this.rand.Next(Deck.NUMBER_OF_CARDS));
             }
             this.topCardIndex = 0;
         }
 
         // not use
-        public Card getRandomCardFromDeck()
+        public Card GetRandomCardFromDeck()
         {
             // TODO
-            return this.cards[this.rand.Next(0, Deck.NUM_OF_CARDS-1)];
+            return this.cards[this.rand.Next(0, Deck.NUMBER_OF_CARDS - 1)];
         }
 
-        public Card getTopCard()
+        public Card GetTopCard()
         {
-            if (this.topCardIndex >= Deck.NUM_OF_CARDS)
+            if (this.topCardIndex >= Deck.NUMBER_OF_CARDS)
             {
-                this.rotate(Deck.NUM_ROTATE);
-                // this is not too realistic..
+                this.Rotate(Deck.NUMBER_OF_SWAPS); // !
             }
             return this.cards[this.topCardIndex++];
         }
 
         public override string ToString()
         {
-            // StringBuilder..
-            string str = "Cards:\n";
-            for (int i = 0; i < Deck.NUM_OF_CARDS; i++)
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("Cards:");
+            for (int i = 0; i < Deck.NUMBER_OF_CARDS; i++)
             {
-                str += "[" + (i + 1) + "] " + this.cards[i].ToString() + "\n";
+                builder.Append("[" + (i + 1) + "] ");
+                builder.AppendLine(this.cards[i].ToString());
             }
-            return str;
+            return builder.ToString();
         }
 
     }

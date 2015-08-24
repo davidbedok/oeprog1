@@ -10,90 +10,90 @@ namespace HunCard.Test
     {
         private static void testCardSuitEnum()
         {
-            System.Console.WriteLine("# List of CardSuit");
+            Console.WriteLine("# List of CardSuit");
             CardSuit[] listOfCardSuit = (CardSuit[])Enum.GetValues(typeof(CardSuit));
             for (int i = 0; i < listOfCardSuit.Length; i++)
             {
-                System.Console.Write(listOfCardSuit[i] + " ");
+                Console.Write(listOfCardSuit[i] + " ");
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
 
-        private static void testCardClass(Random rand)
+        private static void TestCardClass(Random rand)
         {
-            System.Console.WriteLine("# Test Card class");
-            Card cardInstance = new Card(CardSuit.Acorns, CardRank.r8);
-            System.Console.WriteLine(cardInstance);
+            Console.WriteLine("# Test Card class");
+            Card card = new Card(CardSuit.Acorns, CardRank.r8);
+            Console.WriteLine(card);
 
-            Card randomCard = Card.getRandomCard(rand);
-            System.Console.WriteLine(randomCard);
+            Card randomCard = Card.GetRandomCard(rand);
+            Console.WriteLine(randomCard);
         }
 
-        private static void testDeckClass(Random rand)
+        private static void TestDeckClass(Random rand)
         {
-            System.Console.WriteLine("# Test Deck class");
-            Deck deckInstance = new Deck(rand);
-            System.Console.WriteLine(deckInstance);
-            deckInstance.rotate();
-            System.Console.WriteLine(deckInstance);
-            System.Console.WriteLine(deckInstance.getTopCard());
-            System.Console.WriteLine(deckInstance.getTopCard());
-            System.Console.WriteLine(deckInstance.getTopCard());
+            Console.WriteLine("# Test Deck class");
+            Deck deck = new Deck(rand);
+            Console.WriteLine(deck);
+            deck.Rotate();
+            Console.WriteLine(deck);
+            Console.WriteLine(deck.GetTopCard());
+            Console.WriteLine(deck.GetTopCard());
+            Console.WriteLine(deck.GetTopCard());
         }
 
-        private static void testPlayerClass(Random rand)
+        private static void TestPlayerClass(Random rand)
         {
-            System.Console.WriteLine("# Test Player class");
-            Card cardInstance = new Card(CardSuit.Acorns, CardRank.r8);
-            System.Console.WriteLine(cardInstance);
+            Console.WriteLine("# Test Player class");
+            Card card = new Card(CardSuit.Acorns, CardRank.r8);
+            Console.WriteLine(card);
 
-            Player playerInstance = new Player("Teszt Elek");
+            Player player = new Player("Teszt Elek");
 
             // without indexer
-            playerInstance.setCardsItem(0, cardInstance);
-            playerInstance.setCardsItem(1, Card.getRandomCard(rand));
-            playerInstance.setCardsItem(2, new Card(CardSuit.Bells, CardRank.r10));
+            player.SetCard(0, card);
+            player.SetCard(1, Card.GetRandomCard(rand));
+            player.SetCard(2, new Card(CardSuit.Bells, CardRank.r10));
 
             // with indexer
-            playerInstance[0] = cardInstance;
-            playerInstance[1] = Card.getRandomCard(rand);
-            playerInstance[2] = new Card(CardSuit.Bells, CardRank.r10);
+            player[0] = card;
+            player[1] = Card.GetRandomCard(rand);
+            player[2] = new Card(CardSuit.Bells, CardRank.r10);
 
             // for game
-            playerInstance.addCard(cardInstance);
-            playerInstance.addCard(Card.getRandomCard(rand));
-            playerInstance.addCard(CardSuit.Bells, CardRank.r10);
+            player.AddCard(card);
+            player.AddCard(Card.GetRandomCard(rand));
+            player.AddCard(CardSuit.Bells, CardRank.r10);
 
-            System.Console.WriteLine(playerInstance);
+            Console.WriteLine(player);
         }
 
-        private static void testGame(Random rand)
+        private static void TestGame(Random rand)
         {
-            System.Console.WriteLine("# Test Game class");
-            Game hunCardGame = new Game(rand, 4);
-            hunCardGame.addPlayer("Teszt Elek");
-            hunCardGame.addPlayer(new Player("Nemecsek Erno"));
-            hunCardGame.addPlayer("Jancsi Esjuliska");
-            hunCardGame.addPlayer("Vitez Janos");
-            hunCardGame.addPlayer("No More");
+            Console.WriteLine("# Test Game class");
+            Game game = new Game(rand, 4);
+            game.AddPlayer("Teszt Elek");
+            game.AddPlayer(new Player("Nemecsek Erno"));
+            game.AddPlayer("Jancsi Esjuliska");
+            game.AddPlayer("Vitez Janos");
+            game.AddPlayer("No More");
 
-            System.Console.WriteLine("------ WINNER ------");
-            System.Console.WriteLine(hunCardGame.newGame());
-            System.Console.WriteLine("------ GAME ------");
-            System.Console.WriteLine(hunCardGame);
+            Console.WriteLine("------ WINNER ------");
+            Console.WriteLine(game.NewGame());
+            Console.WriteLine("------ GAME ------");
+            Console.WriteLine(game);
 
-            System.Console.WriteLine("------ Third Player Second Card ------");
-            System.Console.WriteLine(hunCardGame[2][1]);
+            Console.WriteLine("------ Third Player Second Card ------");
+            Console.WriteLine(game[2][1]);
         }
 
         private static void Main(string[] args)
         {
             Random rand = new Random();
-            // Program.testCardSuitEnum();
-            // Program.testCardClass(rand);
-            // Program.testDeckClass(rand);
-            // Program.testPlayerClass(rand);
-            Program.testGame(rand);
+            // Program.TestCardSuitEnum();
+            // Program.TestCardClass(rand);
+            // Program.TestDeckClass(rand);
+            // Program.TestPlayerClass(rand);
+            Program.TestGame(rand);
         }
     }
 
