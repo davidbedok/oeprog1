@@ -8,7 +8,6 @@ namespace HunCard
 {
     public class Deck : System.Object
     {
-        private const int NUMBER_OF_CARDS = 32;
         private const int NUMBER_OF_SWAPS = 100;
 
         private readonly Card[] cards;
@@ -18,9 +17,9 @@ namespace HunCard
         public Deck(Random rand)
         {
             this.rand = rand;
-            this.cards = new Card[Deck.NUMBER_OF_CARDS];
             CardSuit[] suits = (CardSuit[])Enum.GetValues(typeof(CardSuit));
             CardRank[] ranks = (CardRank[])Enum.GetValues(typeof(CardRank));
+            this.cards = new Card[suits.Length * ranks.Length];
             for (int i = 0; i < suits.Length; i++)
             {
                 for (int k = 0; k < ranks.Length; k++)
@@ -29,13 +28,6 @@ namespace HunCard
                 }
             }
             this.topCardIndex = 0;
-        }
-
-        private void SwapCards(int indexA, int indexB)
-        {
-            Card tmp = this.cards[indexA];
-            this.cards[indexA] = this.cards[indexB];
-            this.cards[indexB] = tmp;
         }
 
         public void Rotate()
@@ -47,21 +39,28 @@ namespace HunCard
         {
             for (int i = 0; i < time; i++)
             {
-                this.SwapCards(this.rand.Next(Deck.NUMBER_OF_CARDS), this.rand.Next(Deck.NUMBER_OF_CARDS));
+                this.SwapCards(this.rand.Next(this.cards.Length), this.rand.Next(this.cards.Length));
             }
             this.topCardIndex = 0;
+        }
+
+        private void SwapCards(int indexA, int indexB)
+        {
+            Card tmp = this.cards[indexA];
+            this.cards[indexA] = this.cards[indexB];
+            this.cards[indexB] = tmp;
         }
 
         // not use
         public Card GetRandomCardFromDeck()
         {
             // TODO
-            return this.cards[this.rand.Next(0, Deck.NUMBER_OF_CARDS - 1)];
+            return this.cards[this.rand.Next(0, this.cards.Length - 1)];
         }
 
         public Card GetTopCard()
         {
-            if (this.topCardIndex >= Deck.NUMBER_OF_CARDS)
+            if (this.topCardIndex >= this.cards.Length)
             {
                 this.Rotate(Deck.NUMBER_OF_SWAPS); // !
             }
@@ -72,7 +71,7 @@ namespace HunCard
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("Cards:");
-            for (int i = 0; i < Deck.NUMBER_OF_CARDS; i++)
+            for (int i = 0; i < this.cards.Length; i++)
             {
                 builder.Append("[" + (i + 1) + "] ");
                 builder.AppendLine(this.cards[i].ToString());

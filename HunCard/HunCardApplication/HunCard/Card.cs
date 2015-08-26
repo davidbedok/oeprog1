@@ -19,12 +19,12 @@ namespace HunCard
 
         public int GetValue()
         {
-            return (int)suit * (int)rank;
+            return (int)this.suit * (int)this.rank;
         }
 
         public override string ToString()
         {
-            return ("Card: " + suit.ToString() + ":" + rank.ToString() + " value: " + this.GetValue());
+            return ("Card: " + this.suit + ":" + this.rank + " value: " + this.GetValue());
         }
 
         // never use, only test
