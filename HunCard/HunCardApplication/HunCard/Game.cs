@@ -18,8 +18,23 @@ namespace HunCard
         }
 
         public Game(Random rand, int maxNumberOfPlayers)
+            : this(rand)
         {
             this.players = new Player[maxNumberOfPlayers];
+        }
+
+        public Game(Random rand, params String[] playerNames)
+            : this(rand)
+        {
+            this.players = new Player[playerNames.Length];
+            foreach (String playerName in playerNames)
+            {
+                this.AddPlayer(playerName);
+            }
+        }
+
+        private Game(Random rand)
+        {
             this.deck = new Deck(rand);
             this.numberOfPlayers = 0;
         }
@@ -37,9 +52,11 @@ namespace HunCard
             this.AddPlayer(new Player(name));
         }
 
-        private void RotateDeck()
+        public Player Play()
         {
             this.deck.Rotate();
+            this.Division();
+            return this.GetWinner();
         }
 
         private void Division()
@@ -75,22 +92,16 @@ namespace HunCard
                 int maxPosition = 0;
                 for (int i = 1; i < this.numberOfPlayers; i++)
                 {
-                    if (this.players[i].GetCardsValue() > maxValue)
+                    int currentValue = this.players[i].GetCardsValue();
+                    if (currentValue > maxValue)
                     {
-                        maxValue = this.players[i].GetCardsValue();
+                        maxValue = currentValue;
                         maxPosition = i;
                     }
                 }
                 winner = this.players[maxPosition];
             }
             return winner;
-        }
-
-        public Player NewGame()
-        {
-            this.RotateDeck();
-            this.Division();
-            return this.GetWinner();
         }
 
         public override string ToString()

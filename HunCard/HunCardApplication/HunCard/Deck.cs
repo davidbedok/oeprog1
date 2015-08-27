@@ -32,7 +32,7 @@ namespace HunCard
 
         public void Rotate()
         {
-            this.Rotate(Deck.NUMBER_OF_SWAPS);
+            this.Rotate(NUMBER_OF_SWAPS);
         }
 
         public void Rotate(int time)
@@ -62,7 +62,7 @@ namespace HunCard
         {
             if (this.topCardIndex >= this.cards.Length)
             {
-                this.Rotate(Deck.NUMBER_OF_SWAPS); // !
+                this.Rotate(NUMBER_OF_SWAPS); // !
             }
             return this.cards[this.topCardIndex++];
         }
@@ -74,7 +74,12 @@ namespace HunCard
             for (int i = 0; i < this.cards.Length; i++)
             {
                 builder.Append("[" + (i + 1) + "] ");
-                builder.AppendLine(this.cards[i].ToString());
+                builder.Append(this.cards[i].ToString());
+                if (this.topCardIndex == i)
+                {
+                    builder.Append(" <-- top");
+                }
+                builder.AppendLine();
             }
             return builder.ToString();
         }

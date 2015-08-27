@@ -71,19 +71,39 @@ namespace HunCard.Test
         {
             Console.WriteLine("# Test Game class");
             Game game = new Game(rand, 4);
-            game.AddPlayer("Teszt Elek");
-            game.AddPlayer(new Player("Nemecsek Erno"));
-            game.AddPlayer("Jancsi Esjuliska");
-            game.AddPlayer("Vitez Janos");
+            game.AddPlayer("Terence Hill");
+            game.AddPlayer(new Player("Bud Spencer"));
+            game.AddPlayer("Darth Vader");
+            game.AddPlayer("Anakin Skywalker");
             game.AddPlayer("No More");
 
             Console.WriteLine("------ WINNER ------");
-            Console.WriteLine(game.NewGame());
+            Console.WriteLine(game.Play());
             Console.WriteLine("------ GAME ------");
             Console.WriteLine(game);
 
             Console.WriteLine("------ Third Player Second Card ------");
             Console.WriteLine(game[2][1]);
+        }
+
+        private static void TestGame2(Random rand)
+        {
+            Console.WriteLine("# Test Game class");
+            Game game = new Game(rand, "Terence Hill", "Bud Spencer", "Darth Vader", "Anakin Skywalker");
+
+            Console.WriteLine("------ WINNER ------");
+            Console.WriteLine(game.Play());
+            Console.WriteLine("------ GAME ------");
+            Console.WriteLine(game);
+
+            Console.WriteLine("------ Third Player Second Card ------");
+            Console.WriteLine(game[2][1]);
+
+            String[] names = new String[4];
+            names[0] = "Terence Hill";
+            names[3] = "Anakin Skywalker";
+            Game game2 = new Game(rand, names);
+
         }
 
         private static void Main(string[] args)
@@ -93,7 +113,7 @@ namespace HunCard.Test
             // Program.TestCardClass(rand);
             // Program.TestDeckClass(rand);
             // Program.TestPlayerClass(rand);
-            Program.TestGame(rand);
+            Program.TestGame2(rand);
         }
     }
 

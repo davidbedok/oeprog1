@@ -33,13 +33,13 @@ namespace HunCard
         public Player(String name)
         {
             this.name = name;
-            this.cards = new Card[Player.NUMBER_OF_PLAYER_CARDS];
+            this.cards = new Card[NUMBER_OF_PLAYER_CARDS];
             this.cardIndex = 0;
         }
 
         public void AddCard(Card card)
         {
-            if (this.cardIndex < Player.NUMBER_OF_PLAYER_CARDS)
+            if (this.cardIndex < NUMBER_OF_PLAYER_CARDS)
             {
                 this.cards[this.cardIndex++] = card;
             }
@@ -63,7 +63,20 @@ namespace HunCard
             {
                 if (this.cards[i] != null)
                 {
-                    ret += cards[i].GetValue();
+                    ret += this.cards[i].GetValue();
+                }
+            }
+            return ret;
+        }
+
+        public int GetCardsValueWrong()
+        {
+            int ret = 0;
+            for (int i = 0; i < this.cardIndex; i++)
+            {
+                if (this.cards[i] != null)
+                {
+                    ret += (int)this.cards[i].Rank * (int)this.cards[i].Suit;
                 }
             }
             return ret;

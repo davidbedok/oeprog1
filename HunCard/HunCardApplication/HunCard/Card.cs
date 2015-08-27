@@ -11,6 +11,16 @@ namespace HunCard
         private readonly CardSuit suit;
         private readonly CardRank rank;
 
+        public CardSuit Suit
+        {
+            get { return this.suit; }
+        }
+
+        public CardRank Rank
+        {
+            get { return this.rank; }
+        }
+
         public Card(CardSuit suit, CardRank rank)
         {
             this.suit = suit;
