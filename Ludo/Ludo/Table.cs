@@ -59,7 +59,7 @@ namespace Ludo
         public bool IsStartPossible(Player player)
         {
             Figure figure = this.FindFigure(player.StartPosition);
-            return this.FreePosition(player, figure);
+            return this.IsFreePosition(player, figure);
         }
 
         public void StartFigure(Player player)
@@ -69,7 +69,7 @@ namespace Ludo
             this.HandleHit(player, figure);
         }
 
-        private bool FreePosition(Player player, Figure figure)
+        private bool IsFreePosition(Player player, Figure figure)
         {
             return figure == null || figure.Player != player;
         }
@@ -92,7 +92,7 @@ namespace Ludo
             {
                 int position = this.CalculateRealPosition(current.Position + diceValue);
                 Figure figure = this.FindFigure(position);
-                if (this.FreePosition(player, figure))
+                if (this.IsFreePosition(player, figure))
                 {
                     current.SetPosition(position, diceValue);
                     if (current.IsHome())
