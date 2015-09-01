@@ -64,7 +64,7 @@ namespace Ludo
             return new Figure(this);
         }
 
-        public bool HasFiguresAtStart()
+        public bool HasFigureAtStart()
         {
             return this.numOfFiguresAtStart > 0;
         }

@@ -101,7 +101,7 @@ namespace Ludo
 
         private bool IsStartFigurePossible(Player player, int diceValue)
         {
-            return diceValue == START_DICE_VALUE && player.HasFiguresAtStart() && this.table.IsStartPossible(player);
+            return diceValue == START_DICE_VALUE && player.HasFigureAtStart() && this.table.IsStartPossible(player);
         }
 
         private void AddItemToPalpitating(Player player)
