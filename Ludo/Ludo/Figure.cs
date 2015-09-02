@@ -23,6 +23,11 @@ namespace Ludo
             get { return this.position; }
         }
 
+        public int Distance
+        {
+            get { return this.distance; }
+        }
+
         public char Sign
         {
             get { return this.player.Sign; }
@@ -41,9 +46,9 @@ namespace Ludo
             this.distance += diceValue;
         }
 
-        public bool IsHome()
+        public bool IsHome(int diceValue)
         {
-            return this.distance > Table.MAP_SIZE;
+            return this.distance + diceValue > Table.MAP_SIZE;
         }
 
     }

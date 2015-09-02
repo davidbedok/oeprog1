@@ -10,7 +10,7 @@ namespace Ludo
     {
         public int Compare(Figure figure1, Figure figure2)
         {
-            return figure1.Position - figure2.Position;
+            return figure2.Distance - figure1.Distance;
         }
     }
 }

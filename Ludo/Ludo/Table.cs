@@ -24,9 +24,10 @@ namespace Ludo
             this.playersDistance = MAP_SIZE / Game.NUMBER_OF_PLAYERS;
         }
 
-        private int CalculateRealPosition(int position)
+        public bool IsStartPossible(Player player)
         {
-            return position >= MAP_SIZE ? position - MAP_SIZE : position;
+            Figure figure = this.FindFigure(player.StartPosition);
+            return this.IsFreePosition(player, figure);
         }
 
         private Figure FindFigure(int position)
@@ -42,36 +43,16 @@ namespace Ludo
             }
             return figure;
         }
-
-        private List<Figure> Assortment(Player player)
+        private bool IsFreePosition(Player player, Figure figure)
         {
-            List<Figure> figures = new List<Figure>();
-            foreach (Figure current in this.figures)
-            {
-                if (current.Player.Equals(player))
-                {
-                    figures.Add(current);
-                }
-            }
-            return figures;
-        }
-
-        public bool IsStartPossible(Player player)
-        {
-            Figure figure = this.FindFigure(player.StartPosition);
-            return this.IsFreePosition(player, figure);
+            return figure == null || figure.Player != player;
         }
 
         public void StartFigure(Player player)
         {
-            Figure figure = this.FindFigure(player.StartPosition);
+            Figure enemy = this.FindFigure(player.StartPosition);
             this.figures.Add(player.Start());
-            this.HandleHit(player, figure);
-        }
-
-        private bool IsFreePosition(Player player, Figure figure)
-        {
-            return figure == null || figure.Player != player;
+            this.HandleHit(player, enemy);
         }
 
         private void HandleHit(Player player, Figure enemy)
@@ -88,25 +69,44 @@ namespace Ludo
         {
             List<Figure> playerFigures = this.Assortment(player);
             playerFigures.Sort(new FigureDistanceComparer());
-            foreach (Figure current in playerFigures)
+            foreach (Figure figure in playerFigures)
             {
-                int position = this.CalculateRealPosition(current.Position + diceValue);
-                Figure figure = this.FindFigure(position);
-                if (this.IsFreePosition(player, figure))
+                if (figure.IsHome(diceValue))
                 {
-                    current.SetPosition(position, diceValue);
-                    if (current.IsHome())
-                    {
-                        current.Player.Finish();
-                        this.figures.Remove(current);
-                    }
-                    else
-                    {
-                        this.HandleHit(player, figure);
-                    }
+                    figure.Player.Finish();
+                    this.figures.Remove(figure);
                     break;
                 }
+                else
+                {
+                    int position = this.CalculateRealPosition(figure.Position + diceValue);
+                    Figure enemy = this.FindFigure(position);
+                    if (this.IsFreePosition(player, enemy))
+                    {
+                        figure.SetPosition(position, diceValue);
+                        this.HandleHit(player, enemy);
+                        break;
+                    }
+                }
             }
+        }
+
+        private List<Figure> Assortment(Player player)
+        {
+            List<Figure> figures = new List<Figure>();
+            foreach (Figure current in this.figures)
+            {
+                if (current.Player.Equals(player))
+                {
+                    figures.Add(current);
+                }
+            }
+            return figures;
+        }
+
+        private int CalculateRealPosition(int position)
+        {
+            return position >= MAP_SIZE ? position - MAP_SIZE : position;
         }
 
         public String Print(Player[] players)

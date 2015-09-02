@@ -66,25 +66,25 @@ namespace Ludo
         public String Step()
         {
             StringBuilder info = new StringBuilder(30);
-            Player currentPlayer = this.CurrentPlayer;
-            info.Append("R-").Append(this.round).Append(" ").Append(currentPlayer);
-            if (!currentPlayer.IsFinish())
+            Player player = this.CurrentPlayer;
+            info.Append("R-").Append(this.round).Append(" ").Append(player);
+            if (!player.IsFinish())
             {
                 int diceValue = this.dice.Roll();
                 info.Append(" Dice: ").Append(diceValue);
-                if (this.IsStartFigurePossible(currentPlayer, diceValue))
+                if (this.IsStartFigurePossible(player, diceValue))
                 {
-                    this.table.StartFigure(currentPlayer);
+                    this.table.StartFigure(player);
                     info.Append(" START ");
                 }
                 else
                 {
-                    this.table.MoveFigure(currentPlayer, diceValue);
+                    this.table.MoveFigure(player, diceValue);
                     info.Append(" STEP ");
-                }
-                if (currentPlayer.IsFinish())
-                {
-                    this.AddItemToPalpitating(currentPlayer);
+                    if (player.IsFinish())
+                    {
+                        this.AddItemToPalpitating(player);
+                    }
                 }
                 if (diceValue != START_DICE_VALUE)
                 {
