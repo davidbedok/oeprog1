@@ -103,12 +103,17 @@ namespace Ludo
 
         public String PrintStartFigure(int index)
         {
-            return "(" + (this.numOfFiguresAtStart >= index + 1 ? this.Sign : ' ') + ")";
+            return "(" + this.PrintFigure(index, this.numOfFiguresAtStart) + ")";
         }
 
         public String PrintFinishFigure(int index)
         {
-            return " " + (this.numOfFiguresAtFinish >= index + 1 ? this.Sign : ' ') + " ";
+            return " " + this.PrintFigure(index, this.numOfFiguresAtFinish) + " ";
+        }
+
+        private char PrintFigure(int index, int numOfFigures)
+        {
+            return numOfFigures >= index + 1 ? this.Sign : ' ';
         }
 
         public override String ToString()
